@@ -1,0 +1,17 @@
+.mini-reproductor {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: #f5f5f5;
+    padding: 10px;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .mini-reproductor-audio {
+    width: 100%;
+  }
+
+.btn-warning, .btn-danger, .btn-primary, .btn-info{
+  margin-left: 20px;
+}

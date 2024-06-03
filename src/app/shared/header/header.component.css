@@ -1,0 +1,30 @@
+.profile-picture{
+    width: 30px;
+    height: 30px;
+    border: 50%;
+    margin-left: 5px;
+}
+.dropdown-menu {
+    background-color: #343a40;
+}
+  
+.dropdown-item {
+    color: white;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+  
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #495057;
+    color: white;
+}
+  
+.dropdown-item.active {
+    background-color: #495057;
+    color: white;
+}
+.logout{
+    text-decoration: none;
+}
+  

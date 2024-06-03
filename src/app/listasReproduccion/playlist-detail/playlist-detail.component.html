@@ -1,0 +1,47 @@
+<div class="container mt-5">
+    <ng-container *ngIf="songs.length > 0; else noSongs">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-white">{{ playlistName }}</h2>
+            <div>
+                <button class="btn btn-primary text-white" (click)="shufflePlaylist()">
+                    <i class="bi bi-shuffle"> Shuffle</i>
+                </button>
+                <button class="btn btn-info text-white" type="button" (click)="copyLink()">
+                    <i class="bi bi-share-fill"> Compartir</i>
+                </button>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre de la Canción</th>
+                    <th scope="col">Artista</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Reproducción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let song of songs">
+                    <td>{{ song.song_name }}</td>
+                    <td>{{ song.artist }}</td>
+                    <td>{{ song.duration }}</td>
+                    <td>
+                        <button *ngIf="isPlaying && currentAudioUrl === song.safeAudioUrl" class="btn btn-warning" (click)="pause()">
+                            <i class="bi bi-stop-circle"> Stop</i>
+                        </button>
+                        <button *ngIf="!isPlaying || currentAudioUrl !== song.safeAudioUrl" class="btn btn-success" (click)="play(song)">
+                            <i class="bi bi-play-circle"> Play</i>
+                        </button>
+                        <button *ngIf="playlistUserID === currentUserID" class="btn btn-danger" (click)="confirmDelete(song)">
+                            <i class="bi bi-trash"> Borrar</i>
+                        </button>
+                        <audio *ngIf="currentAudioUrl === song.safeAudioUrl" [src]="song.safeAudioUrl" (ended)="onSongEnd()" controls class="w-100" autoplay></audio>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+    <ng-template #noSongs>
+        <h2 class="text-white">No existen canciones para este playlist por ahora.</h2>
+    </ng-template>
+</div>

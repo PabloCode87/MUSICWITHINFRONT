@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <div class="card bg-light">
+      <div class="card-header bg-success text-white">
+        <h2>Crear Playlist</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="playlist_name" class="text-white">Nombre del Playlist:</label>
+            <input type="text" id="playlist_name" formControlName="playlist_name" class="form-control">
+            <div *ngIf="getFormControlError('playlist_name', 'required')" class="text-danger large">
+              El nombre de la playlist es obligatorio.
+            </div>
+            <div *ngIf="getFormControlError('playlist_name', 'minlength')" class="text-danger large">
+              El nombre de la playlist debe tener al menos 3 caracteres.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description" class="text-white mt-3">Descripción:</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+            <div *ngIf="getFormControlError('description', 'required')" class="text-danger large">
+              La descripción es obligatoria.
+            </div>
+            <div *ngIf="getFormControlError('description', 'minlength')" class="text-danger large">
+              La descripción debe tener al menos 3 caracteres.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status" class="text-white mt-3">Estado:</label>
+            <select id="status" formControlName="status" class="form-control">
+              <option value="PUBLICA">Pública</option>
+              <option value="PRIVADA">Privada</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success mt-3">Crear Playlist</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

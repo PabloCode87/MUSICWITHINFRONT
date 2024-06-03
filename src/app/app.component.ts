@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'MusicWithinFront';
+  title = 'Music Within';
+  audioUrl: string | null = null;
+
+  constructor (){}
+
+  ngOnInit():void{
+    
+  }
+
+  
 }
+0

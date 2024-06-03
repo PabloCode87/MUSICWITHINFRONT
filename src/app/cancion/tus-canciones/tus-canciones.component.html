@@ -1,0 +1,21 @@
+<div class="container mt-4 bg-dark p-5 rounded text-white">
+    <h2>Tus Canciones</h2>
+    <table class="table table-dark table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Artista</th>
+          <th>Género</th>
+          <th>Duración</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cancion of canciones" (click)="verDetallesCancion(cancion.songID)">
+          <td>{{ cancion.song_name }}</td>
+          <td>{{ cancion.artist }}</td>
+          <td>{{ cancion.genre }}</td>
+          <td>{{ cancion.duration }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>

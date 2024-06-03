@@ -1,0 +1,9 @@
+<div class="search-container position-relative">
+  <input type="text" class="form-control" placeholder="Buscar canciones..." (input)="onSearch()" />
+  <i class="bi bi-search search-icon"></i>
+  <ul class="list-group" *ngIf="searchResults.length > 0">
+    <li class="list-group-item" *ngFor="let song of searchResults" (click)="navigateToSong(song.id)">
+      {{ song.song_name }}
+    </li>
+  </ul>
+</div>

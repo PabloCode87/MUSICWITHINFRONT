@@ -1,0 +1,22 @@
+<div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onInput($event)"
+      class="form-control"
+      placeholder="Buscar canciones"
+    />
+  
+    <div class="search-dropdown" *ngIf="showDropdown">
+      <ul class="list-group">
+        <li 
+          *ngFor="let cancion of searchResults"
+          (click)="onSelectResult(cancion)"
+          class="list-group-item"
+        >
+          {{ cancion.song_name }} - {{ cancion.artist }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  

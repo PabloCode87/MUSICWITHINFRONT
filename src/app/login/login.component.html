@@ -1,0 +1,29 @@
+<div class="row bg-spotify-green" id="background-image" [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }">
+  <div class="col-lg-7"></div>
+  <div class="col-lg-5 text-center bg-spotify-orange">
+    <h1 class="my-5">Bienvenido Music Within</h1>
+    <h4 class="my-5">Login / Registrarse</h4>
+
+    <form [formGroup]="userForm" (submit)="onSubmit()">
+      <div class="form-group my-5">
+        <input type="text" class="form-input m-auto p-2" formControlName="username" id="inputUser" placeholder="Usuario" />
+        <div class="text-danger" *ngIf="userForm.get('username')?.hasError('required') && userForm.get('username')?.touched">
+          <span>Introduce el usuario</span>
+        </div>
+      </div>
+
+      <div class="form-group my-5">
+        <input type="password" class="form-input m-auto p-2" formControlName="password" id="inputPassword" placeholder="Contraseña" />
+        <div class="text-danger" *ngIf="userForm.get('password')?.hasError('required') && userForm.get('password')?.touched">
+          <span>Introduce la contraseña</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn bg-spotify-orange btn-login" [disabled]="userForm.invalid">Entrar</button>
+    </form>
+    <button class="btn btn-secondary my-3" (click)="navigateToCreateUser()">Registrarse</button>
+    <br>
+    <br>
+    <a href="javascript:void(0)" (click)="onRecoverPassword()" class="recuperarPassword">Recuperar Contraseña</a>
+  </div>
+</div>

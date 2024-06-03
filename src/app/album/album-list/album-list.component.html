@@ -1,0 +1,22 @@
+<div *ngIf="albums" class="container">
+    <h2>{{title}}</h2>
+    <table class="table table-success table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre Album</th>
+                <th>Artista/Compositor</th>
+                <th>Fecha Lanzamiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let album of albums">
+                <td>{{album.albumID}}</td>
+                <td>{{album.album_name}}</td>
+                <td>{{album.artist}}</td>
+                <td>{{album.year}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+  
