@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { EventoService } from '../../services/evento.service';
 import { AuthService } from '../../services/auth.service';
 import { Evento } from '../../interfaces/evento';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-evento-list',
@@ -13,7 +14,10 @@ export class EventoListComponent implements OnInit {
   eventos: Evento[] = [];
   userId: number | null = null;
 
-  constructor(private eventoService: EventoService, private authService: AuthService) {}
+  constructor(private eventoService: EventoService,
+    private authService: AuthService,
+    private router:Router
+  ) {}
 
   ngOnInit(): void {
     this.obtenerEventos();
@@ -94,4 +98,77 @@ export class EventoListComponent implements OnInit {
       console.error('EventoID no puede ser undefined');
     }
   }
+
+  unirseEvento(eventoID: number | undefined): void {
+    if (eventoID !== undefined && this.userId !== null) {
+      this.eventoService.unirseEvento(eventoID, this.userId).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Se unió al evento',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        },
+        error: (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo unir al evento',
+          });
+          console.error('Error al unirse al evento', error);
+        }
+      });
+    } else {
+      console.error('EventoID or userId cannot be undefined or null');
+    }
+  }
+  
+
+  salirseEvento(eventoID: number | undefined): void {
+    if (eventoID !== undefined && this.userId !== null) {
+      Swal.fire({
+        title: '¿Estás seguro de que quieres dejar el evento?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.eventoService.salirseEvento(eventoID, this.userId!).subscribe({
+            next: () => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Saliste del evento',
+                showConfirmButton: false,
+                timer: 1500
+              });
+            },
+            error: (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo salir del evento',
+              });
+              console.error('Error al salir del evento', error);
+            }
+          });
+        }
+      });
+    } else {
+      console.error('EventoID or userId cannot be undefined or null');
+    }
+  }
+
+  detallesEvento(eventoID: number | undefined): void {
+    if (eventoID !== undefined) {
+      this.router.navigate(['/evento', eventoID]);
+    } else {
+      console.error('EventoID no puede ser undefined');
+    }
+  }
+
 }

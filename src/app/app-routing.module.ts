@@ -20,9 +20,13 @@ import { BuscarUsuarioComponent } from './usuario/buscar-usuario/buscar-usuario.
 import { EventoFormComponent } from './evento/evento-form/evento-form.component';
 import { EventoListComponent } from './evento/evento-list/evento-list.component';
 import { ModificarEventoComponent } from './evento/evento-modificar/evento-modificar.component';
+import { EventoBusquedaComponent } from './evento/evento-busqueda/evento-busqueda.component';
+import { EventoDetalleComponent } from './evento/evento-detalle/evento-detalle.component';
+import { AlbumManagementComponent } from './album/album-management/album-management.component';
 
 const routes: Routes = [
   {path:'lista-albumnes',component:AlbumListComponent, canActivate: [LoginGuard]},
+  {path:'album-managment',component:AlbumManagementComponent, canActivate: [LoginGuard]},
   {path:'login',component:LoginComponent},
   { path: 'perfil-usuario', component: PerfilUsuarioComponent, canActivate: [LoginGuard] },
   { path: 'crear-usuario', component: CrearusuarioComponent},
@@ -41,6 +45,8 @@ const routes: Routes = [
   { path: 'crear-evento', component: EventoFormComponent, canActivate: [LoginGuard] },
   { path: 'eventos', component: EventoListComponent, canActivate: [LoginGuard] },
   { path: 'modificar-evento/:id', component: ModificarEventoComponent, canActivate: [LoginGuard] },
+  { path: 'buscar-eventos', component: EventoBusquedaComponent, canActivate: [LoginGuard] },
+  { path: 'evento/:id', component: EventoDetalleComponent, canActivate: [LoginGuard] },
   {path:'', redirectTo:'login', pathMatch:'full'},
   {path: '**', redirectTo: 'login'}
 ];

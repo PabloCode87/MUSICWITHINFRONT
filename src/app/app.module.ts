@@ -40,6 +40,12 @@ import { BuscarUsuarioComponent } from './usuario/buscar-usuario/buscar-usuario.
 import { EventoFormComponent } from './evento/evento-form/evento-form.component';
 import { EventoListComponent } from './evento/evento-list/evento-list.component';
 import { ModificarEventoComponent } from './evento/evento-modificar/evento-modificar.component';
+import { EventoBusquedaComponent } from './evento/evento-busqueda/evento-busqueda.component';
+import { EventoDetalleComponent } from './evento/evento-detalle/evento-detalle.component';
+import { AlbumManagementComponent } from './album/album-management/album-management.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -67,6 +73,9 @@ import { ModificarEventoComponent } from './evento/evento-modificar/evento-modif
     EventoFormComponent,
     EventoListComponent,
     ModificarEventoComponent,
+    EventoBusquedaComponent,
+    EventoDetalleComponent,
+    AlbumManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +90,9 @@ import { ModificarEventoComponent } from './evento/evento-modificar/evento-modif
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   providers: [
     provideAnimationsAsync(),

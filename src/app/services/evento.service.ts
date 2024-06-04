@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Evento } from '../interfaces/evento';
+import { Usuario } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +32,47 @@ export class EventoService {
   eliminarEvento(eventoID: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/evento/${eventoID}`);
   }
+
+  unirseEvento(eventoID: number, userID: number): Observable<void> {
+    const url = `${this.baseUrl}/evento/${eventoID}/usuario/${userID}`;
+    return this.http.post<any>(url, {}).pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  salirseEvento(eventoID: number, userID: number): Observable<void> {
+    const url = `${this.baseUrl}/evento/${eventoID}/usuario/${userID}`;
+    return this.http.delete<void>(url).pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    );
+  }
+
+  buscarEventos(nombreEvento?: string, fechaCreacion?: Date, lugarEvento?: string): Observable<Evento[]> {
+    const url = `${this.baseUrl}/evento/buscar`;
+
+    let params = new HttpParams();
+    if (nombreEvento) params = params.set('nombreEvento', nombreEvento);
+    if (fechaCreacion) params = params.set('fechaCreacion', fechaCreacion.toISOString());
+    if (lugarEvento) params = params.set('lugarEvento', lugarEvento);
+    return this.http.get<Evento[]>(url, { params }).pipe(
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+}
+
+  obtenerUsuariosAsistentes(eventoID: number): Observable<Usuario[]> {
+    const url = `${this.baseUrl}/evento/${eventoID}/usuarios`;
+    return this.http.get<Usuario[]>(url)
+      .pipe(
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
 }

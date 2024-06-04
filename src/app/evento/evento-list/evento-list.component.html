@@ -17,8 +17,16 @@
             <td>{{ evento.lugar_evento }}</td>
             <td>
               <button class="btn btn-outline-warning me-2" *ngIf="userId === evento.userID" [routerLink]="['/modificar-evento', evento.eventoID]"><i class="bi bi-pencil-square"> Modificar</i></button>
-              <button class="btn btn-outline-danger" *ngIf="userId === evento.userID" (click)="eliminarEvento(evento.eventoID)"><i class="bi bi-trash"> Eliminar</i></button>
-              <!-- Meter la opcion de apuntarse al evento implementarlo bien -->
+              <button class="btn btn-outline-danger me-2" *ngIf="userId === evento.userID" (click)="eliminarEvento(evento.eventoID)"><i class="bi bi-trash"> Eliminar</i></button>
+              <button class="btn btn-outline-success me-2" (click)="unirseEvento(evento.eventoID)">
+                Ir <i class="bi bi-person-plus"></i> <!-- No funciona el insertar en front -->
+              </button>
+              <button class="btn btn-outline-danger me-2" (click)="salirseEvento(evento.eventoID)">
+                No ir <i class="bi bi-person-x"></i>
+              </button>
+              <button class="btn btn-outline-info me-2" (click)="detallesEvento(evento.eventoID)">
+                Detalles <i class="bi bi-arrow-return-left"></i>
+              </button>
             </td>
           </tr>
         </tbody>
