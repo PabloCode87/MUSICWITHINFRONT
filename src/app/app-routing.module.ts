@@ -17,6 +17,9 @@ import { UploadCancionComponent } from './cancion/upload-cancion/upload-cancion.
 import { TusCancionesComponent } from './cancion/tus-canciones/tus-canciones.component';
 import { ModificarCancionComponent } from './cancion/modificar-cancion/modificar-cancion.component';
 import { BuscarUsuarioComponent } from './usuario/buscar-usuario/buscar-usuario.component';
+import { EventoFormComponent } from './evento/evento-form/evento-form.component';
+import { EventoListComponent } from './evento/evento-list/evento-list.component';
+import { ModificarEventoComponent } from './evento/evento-modificar/evento-modificar.component';
 
 const routes: Routes = [
   {path:'lista-albumnes',component:AlbumListComponent, canActivate: [LoginGuard]},
@@ -35,6 +38,9 @@ const routes: Routes = [
   { path: 'tus-canciones', component: TusCancionesComponent, canActivate: [LoginGuard] },
   { path: 'modificar/:id', component: ModificarCancionComponent, canActivate: [LoginGuard] },
   { path: 'buscar-usuarios', component: BuscarUsuarioComponent, canActivate: [LoginGuard] },
+  { path: 'crear-evento', component: EventoFormComponent, canActivate: [LoginGuard] },
+  { path: 'eventos', component: EventoListComponent, canActivate: [LoginGuard] },
+  { path: 'modificar-evento/:id', component: ModificarEventoComponent, canActivate: [LoginGuard] },
   {path:'', redirectTo:'login', pathMatch:'full'},
   {path: '**', redirectTo: 'login'}
 ];

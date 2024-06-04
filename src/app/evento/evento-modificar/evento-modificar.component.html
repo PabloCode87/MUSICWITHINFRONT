@@ -1,0 +1,23 @@
+<div class="container pt-4 mt-5">
+    <div class="card bg-darklight text-white">
+      <h2 class="card-header text-center">Modificar {{ evento.nombre_evento }}</h2>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="nombre_evento" class="form-label text-white">Nombre del Evento</label>
+            <input type="text" class="form-control" id="nombre_evento" [(ngModel)]="evento.nombre_evento" name="nombre_evento" required>
+          </div>
+          <div class="mb-3">
+            <label for="fecha_creacion" class="form-label text-white">Fecha de Creación</label>
+            <input type="date" class="form-control" id="fecha_creacion" [(ngModel)]="fechaCreacionInput" name="fecha_creacion" required>
+          </div>
+          <div class="mb-3">
+            <label for="lugar_evento" class="form-label text-white">Lugar del Evento</label>
+            <input type="text" class="form-control" id="lugar_evento" [(ngModel)]="evento.lugar_evento" name="lugar_evento" required>
+          </div>
+          <button type="submit" class="btn btn-outline-info">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -37,6 +37,18 @@
           <li><a routerLink="buscar-usuarios" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Usuarios</a></li>
         </ul>
       </li>
+    </span>
+    <span *ngIf="username">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Eventos
+        </a>
+        <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+          <!-- agregar la busqueda avanzada de eventos -->
+          <li><a routerLink="eventos" class="dropdown-item text-white dropdown-link">Todos los Eventos</a></li>
+          <li><a routerLink="crear-evento" class="dropdown-item text-white dropdown-link">Crear Evento</a></li>
+        </ul>
+      </li>
     </span> 
     <li class="nav-item">
       <span *ngIf="username" class="nav-link text-white">

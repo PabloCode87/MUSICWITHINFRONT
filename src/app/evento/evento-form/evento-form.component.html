@@ -1,0 +1,38 @@
+<div class="container pt-4 mt-5">
+    <div class="card bg-dark text-white">
+      <h2 class="card-header text-center">Crear Evento</h2>
+      <div class="card-body">
+        <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="nombre_evento" class="form-label text-white">Nombre del Evento</label>
+            <input type="text" class="form-control" id="nombre_evento" formControlName="nombre_evento" required>
+            <div *ngIf="eventoForm.get('nombre_evento')?.invalid && eventoForm.get('nombre_evento')?.touched" class="text-danger">
+              <small *ngIf="eventoForm.get('nombre_evento')?.errors?.['required']">Nombre del evento es requerido.</small>
+              <small *ngIf="eventoForm.get('nombre_evento')?.errors?.['minlength']">Nombre del evento debe tener al menos 3 caracteres.</small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="fecha_creacion" class="form-label text-white">Fecha de Creación</label>
+            <input type="date" class="form-control" id="fecha_creacion" formControlName="fecha_creacion" required>
+            <div *ngIf="eventoForm.get('fecha_creacion')?.invalid && eventoForm.get('fecha_creacion')?.touched" class="text-danger">
+              <small *ngIf="eventoForm.get('fecha_creacion')?.errors?.['required']">Fecha de creación es requerida.</small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="lugar_evento" class="form-label text-white">Lugar del Evento</label>
+            <input type="text" class="form-control" id="lugar_evento" formControlName="lugar_evento" required>
+            <div *ngIf="eventoForm.get('lugar_evento')?.invalid && eventoForm.get('lugar_evento')?.touched" class="text-danger">
+              <small *ngIf="eventoForm.get('lugar_evento')?.errors?.['required']">Lugar del evento es requerido.</small>
+              <small *ngIf="eventoForm.get('lugar_evento')?.errors?.['minlength']">Lugar del evento debe tener al menos 3 caracteres.</small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="userID" class="form-label text-white">ID del Usuario</label>
+            <input type="number" class="form-control" id="userID" formControlName="userID" required>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="eventoForm.invalid">Crear Evento</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
