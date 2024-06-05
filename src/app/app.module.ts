@@ -46,6 +46,7 @@ import { AlbumManagementComponent } from './album/album-management/album-managem
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatTabsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatInputModule,
   ],
   providers: [
     provideAnimationsAsync(),

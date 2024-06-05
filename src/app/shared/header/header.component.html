@@ -6,7 +6,7 @@
       </a>
       <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownAlbums">
         <li><a routerLink="lista-albumnes" class="dropdown-item text-white dropdown-link">Todos los Álbumes</a></li>
-        <li><a routerLink="album-managment" class="dropdown-item text-white dropdown-link">Gestión de Álbumes</a></li>
+        <li *ngIf="isAdmin"><a routerLink="album-managment" class="dropdown-item text-white dropdown-link">Gestión de Álbumes</a></li>
       </ul>
     </li>
     <app-search></app-search>

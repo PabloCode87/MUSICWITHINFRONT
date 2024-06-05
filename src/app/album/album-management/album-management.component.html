@@ -55,46 +55,88 @@
         <mat-tab label="Modificar Album">
           <!-- Contenido del segundo tab -->
           <div class="container">
-            <!-- Aquí puedes colocar el contenido relacionado con Modificar Playlist -->
+            <mat-form-field>
+                <mat-label>Selecciona un álbum</mat-label>
+                <mat-select [(value)]="selectedAlbum" (selectionChange)="onAlbumSelected($event.value)">
+                  <mat-option *ngFor="let album of albums" [value]="album">
+                    {{ album.album_name }} - {{ album.artist }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <form *ngIf="selectedAlbum" (ngSubmit)="updateAlbum()">
+                <mat-form-field appearance="fill">
+                  <mat-label>Nombre del Álbum</mat-label>
+                  <input matInput [(ngModel)]="nombreAlbum" name="nombreAlbum" required>
+                </mat-form-field>
+              
+                <mat-form-field appearance="fill">
+                  <mat-label>Artista</mat-label>
+                  <input matInput [(ngModel)]="artistaAlbum" name="artistaAlbum" required>
+                </mat-form-field>
+              
+                <mat-form-field appearance="fill">
+                  <mat-label>Año del Álbum</mat-label>
+                  <input matInput type="number" [(ngModel)]="anioAlbum" name="anioAlbum" required>
+                </mat-form-field>
+              
+                <button mat-button color="primary" type="submit">Actualizar Álbum</button>
+              </form>
+              
           </div>
         </mat-tab>
         <!-- Tercer Tab -->
-        <mat-tab label="Borrar Album">
-          <!-- Contenido del tercer tab -->
-          <div class="container">
-            <!-- Aquí puedes colocar el contenido relacionado con Borrar Playlist -->
-          </div>
+        <mat-tab label="Borrar Álbum">
+            <!-- Contenido del tercer tab -->
+            <div class="container">
+                <h2>Borrar Álbum</h2>
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecciona un Álbum</mat-label>
+                    <mat-select [(ngModel)]="selectedAlbumId">
+                    <mat-option *ngFor="let album of albums" [value]="album.albumID">
+                        {{ album.album_name }} - {{ album.artist }}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="borrarBTN" mat-raised-button color="warn" (click)="eliminarAlbum(selectedAlbumId)">
+                    <mat-icon>delete</mat-icon> Borrar Álbum
+                </button>
+            </div>
         </mat-tab>
-        <!-- Cuarto Tab  SEGUIR CON EL FORMULARIO, DA ERROR-->
+        <!-- Cuarto Tab -->
         <mat-tab label="Crear Album">
             <div class="container">
-                <!-- <div class="row">
+                <div class="row">
                     <div class="col-md-6">
                         <mat-form-field appearance="fill">
                             <mat-label>Nombre del Álbum</mat-label>
                             <input matInput [(ngModel)]="nombreAlbum" name="nombreAlbum" required>
-                        </mat-form-field>
+                            <mat-error *ngIf="!nombreAlbum">El nombre del álbum es obligatorio.</mat-error>
+                          </mat-form-field>
                     </div>
                     <div class="col-md-6">
                         <mat-form-field appearance="fill">
                             <mat-label>Artista</mat-label>
                             <input matInput [(ngModel)]="artistaAlbum" name="artistaAlbum" required>
-                        </mat-form-field>
+                            <mat-error *ngIf="!artistaAlbum">El nombre del artista es obligatorio.</mat-error>
+                          </mat-form-field>
+                          
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-4">
                         <mat-form-field appearance="fill">
                             <mat-label>Año del Álbum</mat-label>
                             <input matInput type="number" [(ngModel)]="anioAlbum" name="anioAlbum" required>
-                        </mat-form-field>
+                            <mat-error *ngIf="anioAlbum === null">El año del álbum es obligatorio.</mat-error>
+                          </mat-form-field>                          
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12 text-center">
-                        <button mat-button color="primary" (click)="crearAlbum()">Crear Álbum</button>
+                        <button mat-button color="primary" (click)="onCreateAlbumClick()" [disabled]="!validateForm()">Crear Álbum</button>
                     </div>
-                </div> -->
+                </div>
             </div>
         </mat-tab>
     </mat-tab-group>

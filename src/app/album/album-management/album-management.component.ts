@@ -3,6 +3,8 @@ import { Album } from '../../interfaces/album';
 import { Cancion } from '../../interfaces/cancion';
 import { AlbumService } from '../../services/album.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-album-management',
@@ -19,16 +21,29 @@ export class AlbumManagementComponent {
   nombreAlbum: string = '';
   artistaAlbum: string = '';
   anioAlbum: number = 0;
+  selectedAlbumId: number = 0;
+  selectedAlbum: Album | null = null;
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  constructor(private albumService: AlbumService, private snackBar: MatSnackBar) { }
+  constructor(private albumService: AlbumService,
+    private snackBar: MatSnackBar,
+    private toastService: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.albumService.getAllAlbums().subscribe(albums => {
       this.albums = albums;
     });
+  }
+
+  onAlbumSelected(album: Album): void {
+    this.selectedAlbum = album;
+    // Cargar los detalles del álbum seleccionado en el formulario
+    this.nombreAlbum = album.album_name;
+    this.artistaAlbum = album.artist;
+    this.anioAlbum = album.year;
   }
 
   onOriginAlbumSelected(album: Album | null): void {
@@ -88,30 +103,35 @@ export class AlbumManagementComponent {
   }
 
   crearAlbum(): void {
-    if (!this.nombreAlbum || !this.artistaAlbum || !this.anioAlbum) {
-      this.showSnackBar('Por favor, complete todos los campos.', 'error');
+    if (!this.validateForm()) {
       return;
     }
 
     const nuevoAlbum: Album = {
-      albumID: 0, // Esto se ajustará automáticamente en el backend
+      albumID: 0,
       album_name: this.nombreAlbum,
       artist: this.artistaAlbum,
-      year: this.anioAlbum
+      year: this.anioAlbum!
     };
-
     this.albumService.insertAlbum(nuevoAlbum).subscribe(
       () => {
-        this.showSnackBar('Álbum creado exitosamente.', 'success');
-        this.nombreAlbum = '';
-        this.artistaAlbum = '';
-        this.anioAlbum = 0;
-        // Aquí podrías recargar la lista de álbumes si fuera necesario
+        this.toastService.success('Álbum creado exitosamente.');
+        this.resetForm();
       },
       () => {
-        this.showSnackBar('Hubo un error al crear el álbum.', 'error');
+        this.toastService.error('Hubo un error al crear el álbum.');
       }
     );
+  }
+
+  validateForm(): boolean {
+    return !!this.nombreAlbum && !!this.artistaAlbum && this.anioAlbum !== null;
+  }
+
+  resetForm(): void {
+    this.nombreAlbum = '';
+    this.artistaAlbum = '';
+    this.anioAlbum = 0;
   }
 
   showSnackBar(message: string, type: string): void {
@@ -122,4 +142,94 @@ export class AlbumManagementComponent {
       panelClass: type === 'error' ? ['error-toast'] : ['success-toast']
     });
   }
+
+  onCreateAlbumClick(): void {
+    if (!this.validateForm()) {
+      this.toastService.error('Por favor, completa todos los campos.');
+    } else {
+      this.crearAlbum();
+    }
+  }
+
+
+  eliminarAlbum(albumID: number): void {
+    if (albumID !== undefined) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Escribe BORRAR para confirmar la eliminación',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        showLoaderOnConfirm: true,
+        preConfirm: (inputValue) => {
+          if (inputValue !== 'BORRAR') {
+            Swal.showValidationMessage('Debes escribir BORRAR para confirmar');
+            return false;
+          }
+          return true;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed && result.value === true) {
+          this.albumService.deleteAlbum(albumID).subscribe(
+            () => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Álbum eliminado',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              this.albumService.getAllAlbums().subscribe(albums => {
+                this.albums = albums;
+              });
+            },
+            () => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo eliminar el álbum',
+              });
+              console.error('Error al eliminar el álbum');
+            }
+          );
+        }
+      });
+    } else {
+      console.error('albumID no puede ser undefined');
+    }
+  }
+
+  updateAlbum(): void {
+    if (!this.validateForm()) {
+      return;
+    }
+  
+    if (!this.selectedAlbum) {
+      return;
+    }
+  
+    const updatedAlbum: Album = {
+      ...this.selectedAlbum,
+      album_name: this.nombreAlbum,
+      artist: this.artistaAlbum,
+      year: this.anioAlbum!
+    };
+  
+    this.albumService.updateAlbum(this.selectedAlbum.albumID, updatedAlbum).subscribe(
+      () => {
+        this.toastService.success('Álbum actualizado exitosamente.');
+        // Opcional: Recargar la lista de álbumes después de actualizar
+        this.albumService.getAllAlbums().subscribe(albums => {
+          this.albums = albums;
+        });
+      },
+      () => {
+        this.toastService.error('Hubo un error al actualizar el álbum.');
+      }
+    );
+  }
+
 }

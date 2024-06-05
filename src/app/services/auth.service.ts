@@ -109,4 +109,23 @@ export class AuthService {
     );
   }
 
+  obtenerTipoUsuario(username: string): Observable<string> {
+    const url = `${this.apiUrl}/usuario/${username}/tipo`;
+    return this.http.get<any>(url).pipe(
+      catchError(error => {
+        console.error('Error al obtener el tipo de usuario:', error);
+        return of(null);
+      }),
+      map(response => {
+        if (typeof response === 'string') {
+          return response;
+        } else if (response && response.tipoUsuario) {
+          return response.tipoUsuario;
+        } else {
+          return 'Tipo de usuario no encontrado';
+        }
+      })
+    );
+  }
+
 }

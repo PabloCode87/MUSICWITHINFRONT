@@ -10,12 +10,18 @@ export class HeaderComponent implements OnInit {
 
   username ?: string;
   user: any;
+  isAdmin: boolean = false;
 
   constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
     this.username = this.auth.getUsername();
     this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    if (this.username) {
+      this.auth.obtenerTipoUsuario(this.username).subscribe(tipo => {
+        this.isAdmin = tipo === 'ADMIN';
+      });
+    }
   }
 
   logout(): void {
