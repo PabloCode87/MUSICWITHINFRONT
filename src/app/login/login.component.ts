@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
       if (result.isConfirmed) {
         this.loginService.recoverPassword(result.value.username, result.value.email).subscribe(
           (response) => {
-            Swal.fire('Recuperación Exitosa', `Su password es: ${response['password']}`, 'success');
+            Swal.fire('Recuperación Exitosa', `Password enviado al email: ${result.value.email}`, 'success');
           },
           (error) => {
             Swal.fire('Error', 'No se pudo recuperar la contraseña. Verifique los datos ingresados', 'error');
@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+  
 
   navigateToCreateUser() {
     this.router.navigate(['/crear-usuario']);
