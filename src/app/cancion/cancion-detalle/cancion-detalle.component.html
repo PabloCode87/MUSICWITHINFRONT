@@ -12,29 +12,58 @@
     </div>
     <div class="card-footer">
       <button type="button" class="btn btn-primary" (click)="openPlaylistModal()"><i class="bi bi-plus-circle-fill"> Agregar</i></button>
-      <button *ngIf="currentUserID === uploadedByID" type="button" class="btn btn-warning" (click)="modificarCancion()"><i class="bi bi-pencil-square"> Modificar</i></button>
-      <button *ngIf="currentUserID === uploadedByID" type="button" class="btn btn-danger" (click)="eliminarCancion()"><i class="bi bi-trash"> Borrar</i></button>
+      <button *ngIf="(currentUserID === uploadedByID || isAdmin)" type="button" class="btn btn-warning" (click)="modificarCancion()"><i class="bi bi-pencil-square"> Modificar</i></button>
+      <button *ngIf="(currentUserID === uploadedByID || isAdmin)" type="button" class="btn btn-danger" (click)="eliminarCancion()"><i class="bi bi-trash"> Borrar</i></button>
       <button type="button" class="btn btn-info" (click)="compartirCancion()"><i class="bi bi-share-fill"> Compartir</i></button>
     </div>
   </div>
-</div>
+  <div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="text-white">Comentarios</h2>
+        <button class="btn btn-success" (click)="abrirModalComentario()"><i class="bi bi-pencil"> Publicar</i></button>
+    </div>
+    <div *ngIf="comentarios.length === 0">
+        <p class="text-white">No hay comentarios para esta canción.</p>
+    </div>
+    <div *ngFor="let comentario of comentarios" class="card mt-3">
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                <img *ngIf="comentario.user.foto" [src]="'data:image/png;base64,' + comentario.user.foto" alt="Foto de perfil" class="profile-picture img-fluid">
+                <img *ngIf="!comentario.user.foto" src="assets/images/usuario/profile.png" alt="Foto de perfil predeterminada" class="profile-picture img-fluid">
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h3 class="card-title">Autor: {{ comentario.user.username }}</h3>
+                    <p class="card-text">{{ comentario.content }}</p>
+                </div>
+                <div class="card-footer bg-black">
+                  <p class="card-text"><small><i>Fecha comentario: {{comentario.creation_date | date:'yyyy-MM-dd HH:mm:ss'}}</i></small></p>
+                  <button *ngIf="(comentario.user.userID === currentUserID || isAdmin || isSupervisor)" type="button" class="btn btn-danger" (click)="eliminarComentario(comentario.commentID)">
+                    <i class="bi bi-trash"> Eliminar</i>
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 
-<!-- Modal -->
-<div class="modal fade" id="playlistModal" tabindex="-1" aria-labelledby="playlistModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="playlistModalLabel">Agregar a Playlist</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <button type="button" class="btn btn-success mb-3" (click)="redirigirACrearPlaylist()"><i class="bi bi-collection-play-fill"> Crear Playlist</i></button>
-        <ul class="list-group">
-          <li *ngFor="let playlist of playlists" class="list-group-item d-flex justify-content-between align-items-center">
-            {{ playlist.playlist_name }}
-            <button class="btn btn-sm btn-primary" (click)="addToPlaylist(playlist.playlistID)"><i class="bi bi-plus-circle-fill"> Agregar</i></button>
-          </li>
-        </ul>
+  <!-- Modal -->
+  <div class="modal fade" id="playlistModal" tabindex="-1" aria-labelledby="playlistModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="playlistModalLabel">Agregar a Playlist</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <button type="button" class="btn btn-success mb-3" (click)="redirigirACrearPlaylist()"><i class="bi bi-collection-play-fill"> Crear Playlist</i></button>
+          <ul class="list-group">
+            <li *ngFor="let playlist of playlists" class="list-group-item d-flex justify-content-between align-items-center">
+              {{ playlist.playlist_name }}
+              <button class="btn btn-sm btn-primary" (click)="addToPlaylist(playlist.playlistID)"><i class="bi bi-plus-circle-fill"> Agregar</i></button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

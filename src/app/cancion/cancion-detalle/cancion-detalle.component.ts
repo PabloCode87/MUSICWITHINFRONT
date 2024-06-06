@@ -9,6 +9,8 @@ import { PlaylistService } from '../../services/playlist.service';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Comentario } from '../../interfaces/comentario';
+import { ComentarioService } from '../../services/comentario.service';
 
 
 @Component({
@@ -22,14 +24,21 @@ export class CancionDetalleComponent implements OnInit {
   audioUrl: SafeUrl | null = null;
   currentUserID: number | null = null;
   showDeleteButton: boolean = false;
+  comentarios: Comentario[] = [];
   playlists: Playlist[] = [];
   uploadedByID: number | null = null;
   playlistForm!: FormGroup;
   userId: number | undefined;
 
+  username ?: string;
+  user: any;
+  isAdmin: boolean = false;
+  isSupervisor: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private cancionService: CancionService,
+    private comentarioService: ComentarioService,
     private sanitizer: DomSanitizer,
     private authService: AuthService,
     private playlistService: PlaylistService,
@@ -44,6 +53,15 @@ export class CancionDetalleComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(3)]],
       status: ['PUBLICA']
     });
+
+    this.username = this.authService.getUsername();
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    if (this.username) {
+      this.authService.obtenerTipoUsuario(this.username).subscribe(tipo => {
+        this.isAdmin = tipo === 'ADMIN';
+        this.isSupervisor = tipo === 'SUPERVISOR';
+      });
+    }
 
     const username = this.authService.getUsername();
     this.authService.getUserId(username).subscribe((userId: number | null) => {
@@ -60,6 +78,7 @@ export class CancionDetalleComponent implements OnInit {
         this.cancionService.obtenerIdUsuarioPorIdCancion(this.cancion.songID).subscribe((uploadedByID: number | null) => {
           this.uploadedByID = uploadedByID;
         });
+        this.cargarComentarios(Number(id));
       });
     }
     this.authService.getUserId(username).subscribe((userId: number | null) => {
@@ -69,6 +88,93 @@ export class CancionDetalleComponent implements OnInit {
         });
       }
     });
+  }
+
+  cargarComentarios(cancionID: number): void {
+    this.comentarioService.obtenerComentariosPorCancion(cancionID).subscribe(
+      (comentarios: Comentario[]) => {
+        this.comentarios = comentarios;
+      },
+      (error) => {
+        console.error('Error al cargar comentarios:', error);
+      }
+    );
+  }
+
+  abrirModalComentario(): void {
+    Swal.fire({
+      title: 'Publicar Comentario',
+      input: 'textarea',
+      inputLabel: 'Escribe tu comentario',
+      inputPlaceholder: 'Ingresa tu comentario aquí...',
+      showCancelButton: true,
+      confirmButtonText: 'Publicar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'El comentario no puede estar vacío';
+        }
+        return null;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const comentarioContent = result.value;
+        this.publicarComentario(comentarioContent);
+      }
+    });
+  }
+
+  publicarComentario(content: string): void {
+    if (this.cancion && this.currentUserID) {
+      const comentario: Comentario = {
+        content: content,
+        user: {
+          username: this.username || 'Desconocido'
+        }
+      };
+      const cancionID = this.cancion.songID;
+      const userID = this.currentUserID;
+
+      this.authService.getUserRoleId(userID).subscribe(
+        (roleID) => {
+          if (roleID !== null) {
+            this.comentarioService.agregarComentario(cancionID, userID, roleID, comentario).subscribe(
+              (nuevoComentario: Comentario) => {
+                this.comentarios.push(nuevoComentario);
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Comentario publicado',
+                  text: 'Tu comentario ha sido publicado exitosamente.'
+                });
+              },
+              (error) => {
+                console.error('Error al publicar comentario:', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'No se pudo publicar el comentario. Inténtalo de nuevo más tarde.'
+                });
+              }
+            );
+          } else {
+            console.error('No se pudo obtener el Role ID del usuario');
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se pudo obtener el Role ID del usuario. Inténtalo de nuevo más tarde.'
+            });
+          }
+        },
+        (error) => {
+          console.error('Error al obtener el Role ID del usuario:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo obtener el Role ID del usuario. Inténtalo de nuevo más tarde.'
+          });
+        }
+      );
+    }
   }
 
   openPlaylistModal() {
@@ -156,7 +262,7 @@ export class CancionDetalleComponent implements OnInit {
       () => {
         this.toastr.success('Playlist creado', 'Éxito');
         // Cerrar el modal si es necesario
-        document.getElementById('playlistModal')?.click(); // Cerrar el modal al completar la creación
+        document.getElementById('playlistModal')?.click();
       },
       (error) => {
         console.error('Error al crear la playlist:', error);
@@ -177,7 +283,7 @@ export class CancionDetalleComponent implements OnInit {
 
   compartirCancion() {
     if (this.cancion) {
-      const songUrl = window.location.href; // Obtiene la URL actual de la página
+      const songUrl = window.location.href;
       navigator.clipboard.writeText(songUrl).then(
         () => {
           this.toastr.success('Enlace copiado al portapapeles', 'Éxito');
@@ -186,6 +292,45 @@ export class CancionDetalleComponent implements OnInit {
           this.toastr.error('No se pudo copiar el enlace', 'Error');
         }
       );
+    }
+  }
+
+
+  eliminarComentario(commentID?: number): void {
+    if (commentID !== undefined) {
+      Swal.fire({
+        title: 'Confirmar eliminación',
+        text: '¿Estás seguro de que quieres eliminar este comentario?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.comentarioService.eliminarComentario(commentID).subscribe(
+            () => {
+              this.comentarios = this.comentarios.filter(comentario => comentario.commentID !== commentID);
+              Swal.fire({
+                icon: 'success',
+                title: 'Comentario eliminado',
+                text: 'El comentario ha sido eliminado correctamente.'
+              });
+            },
+            (error) => {
+              console.error('Error al eliminar el comentario:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo eliminar el comentario. Inténtalo de nuevo más tarde.'
+              });
+            }
+          );
+        }
+      });
+    } else {
+      console.error('El ID del comentario es undefined');
     }
   }
 

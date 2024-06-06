@@ -128,4 +128,14 @@ export class AuthService {
     );
   }
 
+  getUserRoleId(userID: number): Observable<number | null> {
+    return this.http.get<any>(`${this.apiUrl}/usuario/rol/${userID}`).pipe(
+      map(response => response as number),
+      catchError(error => {
+        console.error('Error al obtener el roleID del usuario:', error);
+        return of(null);
+      })
+    );
+  }
+
 }

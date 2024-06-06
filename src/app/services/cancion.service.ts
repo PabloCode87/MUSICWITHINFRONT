@@ -67,7 +67,6 @@ export class CancionService {
   }
 
   eliminarCancionPlaylist(cancionID: number): Observable<void> {
-    console.log(cancionID);
     return this.http.delete<void>(`http://localhost:8080/cancionPlaylist/${cancionID}`).pipe(
       catchError(this.handleError)
     );

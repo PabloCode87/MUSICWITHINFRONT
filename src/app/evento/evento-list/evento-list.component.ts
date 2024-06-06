@@ -13,15 +13,26 @@ import { Router } from '@angular/router';
 export class EventoListComponent implements OnInit {
   eventos: Evento[] = [];
   userId: number | null = null;
+  
+  username ?: string;
+  user: any;
+  isAdmin: boolean = false;
 
   constructor(private eventoService: EventoService,
     private authService: AuthService,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.obtenerEventos();
     this.obtenerUsuarioConectado();
+    this.username = this.authService.getUsername();
+    this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
+    if (this.username) {
+      this.authService.obtenerTipoUsuario(this.username).subscribe(tipo => {
+        this.isAdmin = tipo === 'ADMIN';
+      });
+    }
   }
 
   obtenerEventos(): void {
