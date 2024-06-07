@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors }
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { FollowerUserService } from '../../services/follwer-user.service';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -12,8 +13,14 @@ import Swal from 'sweetalert2';
 export class PerfilUsuarioComponent implements OnInit {
   userForm!: FormGroup;
   user: any;
+  followedUsers: any[] = [];
+  currentUserID?: number;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private toastr: ToastrService) { }
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private followerUserService: FollowerUserService,
+  ) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
@@ -25,6 +32,31 @@ export class PerfilUsuarioComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator.bind(this) });
+
+    this.authService.getFollowedUsersByUserID(this.user.userID).subscribe(
+      users => {
+        this.followedUsers = users;
+      },
+      error => {
+        console.error('Error al obtener los usuarios seguidos:', error);
+      }
+    );
+  }
+
+  dejarDeSeguirUsuario(userID: number) {
+    if (this.currentUserID !== undefined) {
+      this.followerUserService.dejarDeSeguirUsuario(this.currentUserID, userID).subscribe(
+        () => {
+          this.toastr.success(`Dejaste de seguir a ${userID}`);
+        },
+        (error) => {
+          this.toastr.error('Error al dejar de seguir usuario');
+          console.error('Error al dejar de seguir usuario:', error);
+        }
+      );
+    } else {
+      this.toastr.error('El ID del usuario actual es undefined');
+    }
   }
 
   emailValidator(control: AbstractControl): ValidationErrors | null {

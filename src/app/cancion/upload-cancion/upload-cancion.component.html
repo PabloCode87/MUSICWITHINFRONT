@@ -1,44 +1,48 @@
 <div class="container mt-5">
-    <div class="card bg-light">
-        <div class="card-header bg-success text-white">
-            <h2>Subir Nueva Canción</h2>
-        </div>
-        <div class="card-body">
-            <form (ngSubmit)="onSubmit(cancionForm)" #cancionForm="ngForm">
-                <div class="form-group">
-                    <label for="song_name" class="text-white">Nombre de la Canción:</label>
-                    <input type="text" id="song_name" class="form-control" required [(ngModel)]="cancion.song_name" name="song_name">
-                    <div *ngIf="!cancion.song_name" class="text-danger">El nombre de la canción es obligatorio.</div>
-                </div>
-                <div class="form-group">
-                    <label for="artist" class="text-white">Artista:</label>
-                    <input type="text" id="artist" class="form-control" required [(ngModel)]="cancion.artist" name="artist">
-                    <div *ngIf="!cancion.artist" class="text-danger">El nombre del artista es obligatorio.</div>
-                </div>
-                <div class="form-group">
-                    <label for="genre" class="text-white">Género:</label>
-                    <input type="text" id="genre" class="form-control" required [(ngModel)]="cancion.genre" name="genre">
-                    <div *ngIf="!cancion.genre" class="text-danger">El género es obligatorio.</div>
-                </div>
-                <div class="form-group">
-                    <label for="duration" class="text-white">Duración:</label>
-                    <input type="time" id="duration" class="form-control" required [(ngModel)]="cancion.duration" name="duration">
-                    <div *ngIf="!cancion.duration" class="text-danger">La duración es obligatoria.</div>
-                </div>
-                <div class="form-group">
-                    <label for="albumID" class="text-white">Álbum:</label>
-                    <select id="albumID" class="form-control" required [(ngModel)]="cancion.albumID" name="albumID">
-                        <option *ngFor="let album of albums" [value]="album.albumID">{{ album.album_name }} - {{ album.artist }}</option>
-                    </select>
-                    <div *ngIf="!cancion.albumID" class="text-danger">Selecciona un álbum.</div>
-                </div>
-                <div class="form-group">
-                    <label for="audio_file" class="text-white">Archivo de Audio:</label>
-                    <input type="file" id="audio_file" class="form-control" required (change)="onFileChange($event)">
-                    <div *ngIf="!audioFile" class="text-danger">Debes seleccionar un archivo de audio.</div>
-                </div>
-                <button type="submit" class="btn btn-success">Subir Canción</button>
-            </form>
-        </div>
+    <div class="card ">
+      <div class="card-header">
+        <h2>Subir Nueva Canción</h2>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit(cancionForm)" #cancionForm="ngForm" class="row gx-3 gy-2 align-items-center">
+          <div class="col-sm-6">
+            <label for="song_name">Nombre de la Canción</label>
+            <input type="text" id="song_name" class="form-control" required [(ngModel)]="cancion.song_name" name="song_name" placeholder="Nombre de la Canción">
+            <div *ngIf="!cancion.song_name" class="text-danger">El nombre de la canción es obligatorio.</div>
+          </div>
+          <div class="col-sm-6">
+            <label for="artist">Artista</label>
+            <input type="text" id="artist" class="form-control" required [(ngModel)]="cancion.artist" name="artist" placeholder="Artista">
+            <div *ngIf="!cancion.artist" class="text-danger">El nombre del artista es obligatorio.</div>
+          </div>
+          <div class="col-sm-6">
+            <label for="genre">Género</label>
+            <input type="text" id="genre" class="form-control" required [(ngModel)]="cancion.genre" name="genre" placeholder="Género">
+            <div *ngIf="!cancion.genre" class="text-danger">El género es obligatorio.</div>
+          </div>
+          <div class="col-sm-6">
+            <label for="duration">Duración</label>
+            <input type="time" id="duration" class="form-control" required [(ngModel)]="cancion.duration" name="duration" placeholder="Duración">
+            <div *ngIf="!cancion.duration" class="text-danger">La duración es obligatoria.</div>
+          </div>
+          <div class="col-sm-6">
+            <label for="albumID">Álbum</label>
+            <select id="albumID" class="form-select" required [(ngModel)]="cancion.albumID" name="albumID">
+              <option selected disabled>Selecciona un álbum</option>
+              <option *ngFor="let album of albums" [value]="album.albumID">{{ album.album_name }} - {{ album.artist }}</option>
+            </select>
+            <div *ngIf="!cancion.albumID" class="text-danger">Selecciona un álbum.</div>
+          </div>
+          <div class="col-sm-6">
+            <label for="audio_file">Archivo de Audio</label>
+            <input type="file" id="audio_file" class="form-control" required (change)="onFileChange($event)">
+            <div *ngIf="!audioFile" class="text-danger">Debes seleccionar un archivo de audio.</div>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-success">Subir Cancion <i class="bi bi-cloud-upload-fill"></i></button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
+  

@@ -1,72 +1,163 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark text-white">
-  <ul class="navbar-nav">
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" id="navbarDropdownAlbums" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Álbumes
-      </a>
-      <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownAlbums">
-        <li><a routerLink="lista-albumnes" class="dropdown-item text-white dropdown-link">Todos los Álbumes</a></li>
-        <li *ngIf="isAdmin"><a routerLink="album-managment" class="dropdown-item text-white dropdown-link">Gestión de Álbumes</a></li>
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <button (click)="home()" routerLink="home" class="btn btn-link text-white logout"><i class="bi bi-house"> Home</i></button>
+        </li>
+        <app-search></app-search>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownAlbums" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Álbumes
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownAlbums">
+            <li><a routerLink="lista-albumnes" class="dropdown-item text-white dropdown-link">Todos los Álbumes</a></li>
+            <li *ngIf="isAdmin"><a routerLink="album-managment" class="dropdown-item text-white dropdown-link">Gestión de Álbumes</a></li>
+          </ul>
+        </li>
+        <span *ngIf="username">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Canciones
+            </a>
+            <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+              <li><a routerLink="buscar-canciones" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Canciones</a></li>
+              <li><a routerLink="subir-cancion" class="dropdown-item text-white dropdown-link">Subir Cancion</a></li>
+              <li><a routerLink="tus-canciones" class="dropdown-item text-white dropdown-link">Ver Tus Canciones</a></li>
+            </ul>
+          </li>
+        </span>
+        <span *ngIf="username">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Playlists
+            </a>
+            <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+              <li><a routerLink="buscar-playlists" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Playlists</a></li>
+              <li><a routerLink="crear-playlists" class="dropdown-item text-white dropdown-link">Crear Playlist</a></li>
+              <li><a routerLink="ver-tus-playlists" class="dropdown-item text-white dropdown-link">Ver Tus Playlists</a></li>
+            </ul>
+          </li>
+        </span>
+        <span *ngIf="username">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Usuarios
+            </a>
+            <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+              <li><a routerLink="buscar-usuarios" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Usuarios</a></li>
+            </ul>
+          </li>
+        </span>
+        <span *ngIf="username">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Eventos
+            </a>
+            <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+              <li><a routerLink="buscar-eventos" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Eventos</a></li>
+              <li><a routerLink="crear-evento" class="dropdown-item text-white dropdown-link">Crear Evento</a></li>
+              <li><a routerLink="eventos" class="dropdown-item text-white dropdown-link">Todos los Eventos</a></li>
+            </ul>
+          </li>
+        </span>
       </ul>
-    </li>
-    <app-search></app-search>
-    <span *ngIf="username">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Canciones
-        </a>
-        <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-          <li><a routerLink="buscar-canciones" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Canciones</a></li>
-          <li><a routerLink="subir-cancion" class="dropdown-item text-white dropdown-link">Subir Cancion</a></li>
-          <li><a routerLink="tus-canciones" class="dropdown-item text-white dropdown-link">Ver Tus Canciones</a></li>
-        </ul>
-      </li>
-    </span>
-    <span *ngIf="username">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Playlists
-        </a>
-        <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-          <li><a routerLink="buscar-playlists" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Playlists</a></li>
-          <li><a routerLink="crear-playlists" class="dropdown-item text-white dropdown-link">Crear Playlist</a></li>
-          <li><a routerLink="ver-tus-playlists" class="dropdown-item text-white dropdown-link">Ver Tus Playlists</a></li>
-        </ul>
-      </li>
-    </span>
-    <span *ngIf="username">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Usuarios
-        </a>
-        <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-          <li><a routerLink="buscar-usuarios" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Usuarios</a></li>
-        </ul>
-      </li>
-    </span>
-    <span *ngIf="username">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Eventos
-        </a>
-        <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-          <li><a routerLink="buscar-eventos" class="dropdown-item text-white dropdown-link">Busqueda Avanzada Eventos</a></li>
-          <li><a routerLink="crear-evento" class="dropdown-item text-white dropdown-link">Crear Evento</a></li>
-          <li><a routerLink="eventos" class="dropdown-item text-white dropdown-link">Todos los Eventos</a></li>
-        </ul>
-      </li>
-    </span> 
-    <li class="nav-item">
-      <span *ngIf="username" class="nav-link text-white">
-        Bienvenido, {{ username }}
-        <a routerLink="perfil-usuario">
-          <img *ngIf="user && user.foto" [src]="'data:image/png;base64,' + user.foto" alt="Foto de perfil" class="profile-picture img-fluid">
-          <img *ngIf="!user || !user.foto" src="assets/images/usuario/profile.png" alt="Foto de perfil predeterminada" class="profile-picture img-fluid">
-        </a>
-      </span>
-    </li>
-    <li class="nav-item">
-      <button (click)="logout()" class="btn btn-link text-white logout"><i class="bi bi-box-arrow-right"> Logout</i></button>
-    </li>
-  </ul>
+      <div class="d-flex">
+        <span *ngIf="username" class="nav-link text-white">
+          Bienvenido, {{ username }}
+          <a routerLink="perfil-usuario">
+            <img *ngIf="user && user.foto" [src]="'data:image/png;base64,' + user.foto" alt="Foto de perfil" class="profile-picture img-fluid">
+            <img *ngIf="!user || !user.foto" src="assets/images/usuario/profile.png" alt="Foto de perfil predeterminada" class="profile-picture img-fluid">
+          </a>
+        </span>
+        <button (click)="logout()" class="btn btn-link text-white logout"><i class="bi bi-box-arrow-right"> Logout</i></button>
+      </div>
+    </div>
+  </div>
 </nav>
+
+<!-- Offcanvas sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <button (click)="home()" routerLink="home" class="btn btn-link text-dark logout"><i class="bi bi-house"> Home</i></button>
+      </li>
+      <app-search></app-search>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownAlbums" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Álbumes
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownAlbums">
+          <li><a routerLink="lista-albumnes" class="dropdown-item">Todos los Álbumes</a></li>
+          <li *ngIf="isAdmin"><a routerLink="album-managment" class="dropdown-item">Gestión de Álbumes</a></li>
+        </ul>
+      </li>
+      <span *ngIf="username">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Canciones
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a routerLink="buscar-canciones" class="dropdown-item">Busqueda Avanzada Canciones</a></li>
+            <li><a routerLink="subir-cancion" class="dropdown-item">Subir Cancion</a></li>
+            <li><a routerLink="tus-canciones" class="dropdown-item">Ver Tus Canciones</a></li>
+          </ul>
+        </li>
+      </span>
+      <span *ngIf="username">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Playlists
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a routerLink="buscar-playlists" class="dropdown-item">Busqueda Avanzada Playlists</a></li>
+            <li><a routerLink="crear-playlists" class="dropdown-item">Crear Playlist</a></li>
+            <li><a routerLink="ver-tus-playlists" class="dropdown-item">Ver Tus Playlists</a></li>
+          </ul>
+        </li>
+      </span>
+      <span *ngIf="username">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuarios
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a routerLink="buscar-usuarios" class="dropdown-item">Busqueda Avanzada Usuarios</a></li>
+          </ul>
+        </li>
+      </span>
+      <span *ngIf="username">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Eventos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a routerLink="buscar-eventos" class="dropdown-item">Busqueda Avanzada Eventos</a></li>
+            <li><a routerLink="crear-evento" class="dropdown-item">Crear Evento</a></li>
+            <li><a routerLink="eventos" class="dropdown-item">Todos los Eventos</a></li>
+          </ul>
+        </li>
+      </span>
+      <li class="nav-item">
+        <span *ngIf="username" class="nav-link text-dark">
+          Bienvenido, {{ username }}
+          <a routerLink="perfil-usuario">
+            <img *ngIf="user && user.foto" [src]="'data:image/png;base64,' + user.foto" alt="Foto de perfil" class="profile-picture img-fluid">
+            <img *ngIf="!user || !user.foto" src="assets/images/usuario/profile.png" alt="Foto de perfil predeterminada" class="profile-picture img-fluid">
+          </a>
+        </span>
+      </li>
+      <li class="nav-item">
+        <button (click)="logout()" class="btn btn-link text-dark logout"><i class="bi bi-box-arrow-right"> Logout</i></button>
+      </li>
+    </ul>
+  </div>
+</div>

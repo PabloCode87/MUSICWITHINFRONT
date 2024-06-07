@@ -9,7 +9,7 @@ body {
 }
 
 .card {
-    width: 90%;
+    width: 100%;
     color: white;
   }
 
@@ -68,5 +68,16 @@ body {
     font-weight: bolder;
     background-color: #dc3545;
     border-color: white;
+  }
+  .custom-tabs .nav-link {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    color: #495057;
+  }
+  
+  .custom-tabs .nav-link.active {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #ffffff;
   }
   

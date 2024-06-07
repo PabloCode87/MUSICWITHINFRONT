@@ -1,80 +1,95 @@
-<!-- Primera fila del formulario -->
-<div class="container">
-    <h3 class="text-white mt-3">Creacion de Usuario</h3>
-    <div class="col-md-6">
-        <form [formGroup]="crearUsuarioForm" (ngSubmit)="onSubmit()">
+<div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h3>Creación de Usuario</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="crearUsuarioForm" (ngSubmit)="onSubmit()" class="row gx-3 gy-2 align-items-center">
+          <div class="col-md-6">
             <div class="form-group">
-                <label for="username" class="text-white mt-3">Username:</label>
-                <input type="text" id="username" formControlName="username" class="form-control">
-                <div *ngIf="getFormControlError('username', 'required')" class="text-danger small">
-                    El nombre de usuario es obligatorio.
-                </div>
+              <label for="username">Username:</label>
+              <input type="text" id="username" formControlName="username" class="form-control">
+              <div *ngIf="getFormControlError('username', 'required')" class="text-danger small">
+                El nombre de usuario es obligatorio.
+              </div>
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
-                <label for="email" class="text-white mt-3">Email:</label>
-                <input type="email" id="email" formControlName="email" class="form-control">
-                <div *ngIf="getFormControlError('email', 'required')" class="text-danger small">
-                    El email es obligatorio.
-                </div>
-                <div *ngIf="getFormControlError('email', 'email')" class="text-danger small">
-                    El email debe ser válido.
-                </div>
+              <label for="email">Email:</label>
+              <input type="email" id="email" formControlName="email" class="form-control">
+              <div *ngIf="getFormControlError('email', 'required')" class="text-danger small">
+                El email es obligatorio.
+              </div>
+              <div *ngIf="getFormControlError('email', 'email')" class="text-danger small">
+                El email debe ser válido.
+              </div>
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
-                <label for="confirmEmail" class="text-white mt-3">Confirmar Email:</label>
-                <input type="email" id="confirmEmail" formControlName="confirmEmail" class="form-control">
-                <div *ngIf="getFormControlError('confirmEmail', 'required')" class="text-danger small">
-                    Confirmar el email es obligatorio.
-                </div>
-                <div *ngIf="getFormControlError('confirmEmail', 'email')" class="text-danger small">
-                    El email debe ser válido.
-                </div>
-                <div *ngIf="getFormControlError('confirmEmail', 'emailMismatch')" class="text-danger small">
-                    Los emails deben coincidir.
-                </div>
+              <label for="confirmEmail">Confirmar Email:</label>
+              <input type="email" id="confirmEmail" formControlName="confirmEmail" class="form-control">
+              <div *ngIf="getFormControlError('confirmEmail', 'required')" class="text-danger small">
+                Confirmar el email es obligatorio.
+              </div>
+              <div *ngIf="getFormControlError('confirmEmail', 'email')" class="text-danger small">
+                El email debe ser válido.
+              </div>
+              <div *ngIf="getFormControlError('confirmEmail', 'emailMismatch')" class="text-danger small">
+                Los emails deben coincidir.
+              </div>
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
-                <label for="password" class="text-white mt-3">Password:</label>
-                <input type="password" id="password" formControlName="password" class="form-control">
-                <div *ngIf="getFormControlError('password', 'required')" class="text-danger small">
-                    La contraseña es obligatoria.
-                </div>
+              <label for="password">Password:</label>
+              <input type="password" id="password" formControlName="password" class="form-control">
+              <div *ngIf="getFormControlError('password', 'required')" class="text-danger small">
+                La contraseña es obligatoria.
+              </div>
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
-                <label for="confirmPassword" class="text-white mt-3">Confirmar Password:</label>
-                <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
-                <div *ngIf="getFormControlError('confirmPassword', 'required')" class="text-danger small">
-                    Confirmar la contraseña es obligatorio.
-                </div>
-                <div *ngIf="getFormControlError('confirmPassword', 'passwordMismatch')" class="text-danger small">
-                    Las contraseñas deben coincidir.
-                </div>
+              <label for="confirmPassword">Confirmar Password:</label>
+              <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+              <div *ngIf="getFormControlError('confirmPassword', 'required')" class="text-danger small">
+                Confirmar la contraseña es obligatorio.
+              </div>
+              <div *ngIf="getFormControlError('confirmPassword', 'passwordMismatch')" class="text-danger small">
+                Las contraseñas deben coincidir.
+              </div>
             </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" id="nombre" formControlName="nombre" class="form-control">
+              <div *ngIf="getFormControlError('nombre', 'required')" class="text-danger small">
+                El nombre es obligatorio.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="apellidos">Apellidos:</label>
+              <input type="text" id="apellidos" formControlName="apellidos" class="form-control">
+              <div *ngIf="getFormControlError('apellidos', 'required')" class="text-danger small">
+                Los apellidos son obligatorios.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="foto">Foto:</label>
+              <input type="file" id="foto" formControlName="foto" class="form-control">
+            </div>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Crear Usuario</button>
+          </div>
         </form>
+      </div>
     </div>
-    <!-- Segunda fila del formulario -->
-    <div class="col-md-6">
-        <form [formGroup]="crearUsuarioForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="nombre" class="text-white mt-3">Nombre:</label>
-                <input type="text" id="nombre" formControlName="nombre" class="form-control">
-                <div *ngIf="getFormControlError('nombre', 'required')" class="text-danger small">
-                    El nombre es obligatorio.
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="apellidos" class="text-white mt-3">Apellidos:</label>
-                <input type="text" id="apellidos" formControlName="apellidos" class="form-control">
-                <div *ngIf="getFormControlError('apellidos', 'required')" class="text-danger small">
-                    Los apellidos son obligatorios.
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="foto" class="text-white mt-3">Foto:</label>
-                <input type="file" id="foto" formControlName="foto" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Crear Usuario</button>
-        </form>
-    </div>
-</div>
-
+  </div>

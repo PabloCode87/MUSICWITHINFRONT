@@ -23,8 +23,10 @@ import { ModificarEventoComponent } from './evento/evento-modificar/evento-modif
 import { EventoBusquedaComponent } from './evento/evento-busqueda/evento-busqueda.component';
 import { EventoDetalleComponent } from './evento/evento-detalle/evento-detalle.component';
 import { AlbumManagementComponent } from './album/album-management/album-management.component';
+import { HomeComponent } from './home/home/home.component';
 
 const routes: Routes = [
+  {path:'home',component:HomeComponent, canActivate: [LoginGuard]},
   {path:'lista-albumnes',component:AlbumListComponent, canActivate: [LoginGuard]},
   {path:'album-managment',component:AlbumManagementComponent, canActivate: [LoginGuard]},
   {path:'login',component:LoginComponent},

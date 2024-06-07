@@ -138,4 +138,13 @@ export class AuthService {
     );
   }
 
+  getFollowedUsersByUserID(userID: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/usuario/seguidos/${userID}`).pipe(
+      catchError(error => {
+        console.error('Error al obtener los usuarios seguidos:', error);
+        return of([]);
+      })
+    );
+  }
+
 }

@@ -1,99 +1,143 @@
-<body>
-  <div *ngIf="user" class="card bg-spotify-green">
-    <div class="card-header">
-      <h2>Perfil de {{ user?.username }}</h2>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <!-- Primera columna: Foto -->
-        <div class="col-md-4">
-          <div class="profile-picture-container">
-            <img [src]="user?.foto ? 'data:image/jpeg;base64,' + user.foto : 'assets/images/usuario/profile.png'" alt="Foto de perfil" class="profile-picture img-fluid">
-            <div class="overlay">
-              <input type="file" id="foto" (change)="onFileSelected($event)" style="display: none;">
-              <button class="btn btn-link add-photo-link" (click)="onChangePhotoClick()">Cambiar foto</button>
+<div class="container mt-5">
+  <ul class="nav nav-tabs custom-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="perfil-tab" data-bs-toggle="tab" data-bs-target="#perfil" type="button" role="tab" aria-controls="perfil" aria-selected="true">Perfil de {{ user?.username }}</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="usuarios-seguidos-tab" data-bs-toggle="tab" data-bs-target="#usuarios-seguidos" type="button" role="tab" aria-controls="usuarios-seguidos" aria-selected="false">Usuarios Seguidos</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <!-- Pestaña Perfil -->
+    <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
+      <div *ngIf="user" class="card bg-spotify-green">
+        <div class="card-header">
+          <h2>Perfil de {{ user?.username }}</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Primera columna: Foto -->
+            <div class="col-md-4">
+              <div class="profile-picture-container">
+                <img [src]="user?.foto ? 'data:image/jpeg;base64,' + user.foto : 'assets/images/usuario/profile.png'" alt="Foto de perfil" class="profile-picture img-fluid">
+                <div class="overlay">
+                  <input type="file" id="foto" (change)="onFileSelected($event)" style="display: none;">
+                  <button class="btn btn-link add-photo-link" (click)="onChangePhotoClick()">Cambiar foto</button>
+                </div>
+              </div>
+            </div>
+            <!-- Segunda columna: Usuario y Contraseña -->
+            <div class="col-md-4">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('username', 'required') || getFormControlError('username', 'minlength')}">
+                  <label for="username">Nombre de usuario:</label>
+                  <input type="text" id="username" formControlName="username" class="form-control form-input">
+                  <div *ngIf="getFormControlError('username', 'required')" class="text-danger small">
+                    El nombre de usuario es obligatorio.
+                  </div>
+                  <div *ngIf="getFormControlError('username', 'minlength')" class="text-danger small">
+                    El nombre de usuario debe tener al menos 3 caracteres.
+                  </div>
+                </div>
+                <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('password', 'required') || getFormControlError('password', 'minlength') || getFormControlError('password', 'invalidPassword')}">
+                  <label for="password">Contraseña:</label>
+                  <input type="password" id="password" formControlName="password" class="form-control form-input">
+                  <div *ngIf="getFormControlError('password', 'required')" class="text-danger small">
+                    La contraseña es obligatoria.
+                  </div>
+                  <div *ngIf="getFormControlError('password', 'minlength')" class="text-danger small">
+                    La contraseña debe tener al menos 6 caracteres.
+                  </div>
+                  <div *ngIf="getFormControlError('password', 'invalidPassword')" class="text-danger small">
+                    La contraseña debe contener al menos un número.
+                  </div>
+                </div>
+                <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('confirmPassword', 'required') || getFormControlError('confirmPassword', 'passwordMismatch')}">
+                  <label for="confirmPassword">Repetir contraseña:</label>
+                  <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control form-input">
+                  <div *ngIf="getFormControlError('confirmPassword', 'required')" class="text-danger small">
+                    Confirmar contraseña es obligatorio.
+                  </div>
+                  <div *ngIf="getFormControlError('confirmPassword', 'passwordMismatch')" class="text-danger small">
+                    Las contraseñas no coinciden.
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-login">Guardar cambios</button>
+              </form>
+            </div>
+            <!-- Tercera columna: Nombre, Apellidos y Email -->
+            <div class="col-md-4">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('nombre', 'required') || getFormControlError('nombre', 'minlength')}">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" id="nombre" formControlName="nombre" class="form-control form-input">
+                  <div *ngIf="getFormControlError('nombre', 'required')" class="text-danger small">
+                    El nombre es obligatorio.
+                  </div>
+                  <div *ngIf="getFormControlError('nombre', 'minlength')" class="text-danger small">
+                    El nombre debe tener al menos 3 caracteres.
+                  </div>
+                </div>
+                <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('apellidos', 'required') || getFormControlError('apellidos', 'minlength')}">
+                  <label for="apellidos">Apellidos:</label>
+                  <input type="text" id="apellidos" formControlName="apellidos" class="form-control form-input">
+                  <div *ngIf="getFormControlError('apellidos', 'required')" class="text-danger small">
+                    Los apellidos son obligatorios.
+                  </div>
+                  <div *ngIf="getFormControlError('apellidos', 'minlength')" class="text-danger small">
+                    Los apellidos deben tener al menos 3 caracteres.
+                  </div>
+                </div>
+                <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('email', 'required') || getFormControlError('email', 'email') || getFormControlError('email', 'invalidEmail')}">
+                  <label for="email">Email:</label>
+                  <input type="text" id="email" formControlName="email" class="form-control form-input">
+                  <div *ngIf="getFormControlError('email', 'required')" class="text-danger small">
+                    El email es obligatorio.
+                  </div>
+                  <div *ngIf="getFormControlError('email', 'email')" class="text-danger small">
+                    El email debe ser válido.
+                  </div>
+                  <div *ngIf="getFormControlError('email', 'invalidEmail')" class="text-danger small">
+                    El email debe tener un dominio válido (.com o .es).
+                  </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-delete" (click)="onDelete()">Eliminar Usuario</button>
+              </form>
             </div>
           </div>
         </div>
-        <!-- Segunda columna: Usuario y Contraseña -->
-        <div class="col-md-4">
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('username', 'required') || getFormControlError('username', 'minlength')}">
-              <label for="username">Nombre de usuario:</label>
-              <input type="text" id="username" formControlName="username" class="form-control form-input">
-              <div *ngIf="getFormControlError('username', 'required')" class="text-danger small">
-                El nombre de usuario es obligatorio.
-              </div>
-              <div *ngIf="getFormControlError('username', 'minlength')" class="text-danger small">
-                El nombre de usuario debe tener al menos 3 caracteres.
-              </div>
-            </div>
-            <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('password', 'required') || getFormControlError('password', 'minlength') || getFormControlError('password', 'invalidPassword')}">
-              <label for="password">Contraseña:</label>
-              <input type="password" id="password" formControlName="password" class="form-control form-input">
-              <div *ngIf="getFormControlError('password', 'required')" class="text-danger small">
-                La contraseña es obligatoria.
-              </div>
-              <div *ngIf="getFormControlError('password', 'minlength')" class="text-danger small">
-                La contraseña debe tener al menos 6 caracteres.
-              </div>
-              <div *ngIf="getFormControlError('password', 'invalidPassword')" class="text-danger small">
-                La contraseña debe contener al menos un número.
-              </div>
-            </div>
-            <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('confirmPassword', 'required') || getFormControlError('confirmPassword', 'passwordMismatch')}">
-              <label for="confirmPassword">Repetir contraseña:</label>
-              <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control form-input">
-              <div *ngIf="getFormControlError('confirmPassword', 'required')" class="text-danger small">
-                Confirmar contraseña es obligatorio.
-              </div>
-              <div *ngIf="getFormControlError('confirmPassword', 'passwordMismatch')" class="text-danger small">
-                Las contraseñas no coinciden.
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-login">Guardar cambios</button>
-          </form>
-        </div>
-        <!-- Tercera columna: Nombre, Apellidos y Email -->
-        <div class="col-md-4">
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('nombre', 'required') || getFormControlError('nombre', 'minlength')}">
-              <label for="nombre">Nombre:</label>
-              <input type="text" id="nombre" formControlName="nombre" class="form-control form-input">
-              <div *ngIf="getFormControlError('nombre', 'required')" class="text-danger small">
-                El nombre es obligatorio.
-              </div>
-              <div *ngIf="getFormControlError('nombre', 'minlength')" class="text-danger small">
-                El nombre debe tener al menos 3 caracteres.
-              </div>
-            </div>
-            <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('apellidos', 'required') || getFormControlError('apellidos', 'minlength')}">
-              <label for="apellidos">Apellidos:</label>
-              <input type="text" id="apellidos" formControlName="apellidos" class="form-control form-input">
-              <div *ngIf="getFormControlError('apellidos', 'required')" class="text-danger small">
-                Los apellidos son obligatorios.
-              </div>
-              <div *ngIf="getFormControlError('apellidos', 'minlength')" class="text-danger small">
-                Los apellidos deben tener al menos 3 caracteres.
-              </div>
-            </div>
-            <div class="form-group mb-3" [ngClass]="{'has-error': getFormControlError('email', 'required') || getFormControlError('email', 'email') || getFormControlError('email', 'invalidEmail')}">
-              <label for="email">Email:</label>
-              <input type="text" id="email" formControlName="email" class="form-control form-input">
-              <div *ngIf="getFormControlError('email', 'required')" class="text-danger small">
-                El email es obligatorio.
-              </div>
-              <div *ngIf="getFormControlError('email', 'email')" class="text-danger small">
-                El email debe ser válido.
-              </div>
-              <div *ngIf="getFormControlError('email', 'invalidEmail')" class="text-danger small">
-                El email debe tener un dominio válido (.com o .es).
-              </div>
-            </div>
-            <button type="button" class="btn btn-danger btn-delete" (click)="onDelete()">Eliminar Usuario</button>
-          </form>
-        </div>
+      </div>
+    </div>
+    <!-- Pestaña Usuarios Seguidos -->
+    <div class="tab-pane fade" id="usuarios-seguidos" role="tabpanel" aria-labelledby="usuarios-seguidos-tab">
+      <!-- Contenido de la pestaña Usuarios Seguidos -->
+      <div *ngIf="followedUsers.length === 0">
+        <p>No sigues a ningún usuario.</p>
+      </div>
+      <div *ngIf="followedUsers.length > 0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre de Usuario</th>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>Email</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let followedUser of followedUsers">
+              <td>{{ followedUser.username }}</td>
+              <td>{{ followedUser.nombre }}</td>
+              <td>{{ followedUser.apellidos }}</td>
+              <td>{{ followedUser.email }}</td>
+              <td>
+                <button class="btn btn-danger" (click)="dejarDeSeguirUsuario(followedUser.userID)"><i class="bi bi-person-dash"> Unfollow</i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</body>
+</div>

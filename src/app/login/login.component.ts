@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
           (user) => {
             sessionStorage.setItem('user', JSON.stringify(user));
             this.toastr.success(`¡Bienvenido ${this.userForm.value.username}!`, 'Login exitoso');
-            this.router.navigate(['/lista-albumnes']).then(() => {
+            this.router.navigate(['/home']).then(() => {
               window.location.reload();
             });
           },

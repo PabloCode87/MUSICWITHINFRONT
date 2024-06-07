@@ -1,0 +1,17 @@
+.profile-picture {
+    width: 75px;
+}
+
+.avatar {
+    width: 75px !important;
+    height: 75px !important;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    top: 105%;
+}
