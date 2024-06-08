@@ -77,6 +77,7 @@ export class AuthService {
   }
 
   getUserId(username: string): Observable<number | null> {
+    console.log('username service: '+username);
     return this.http.get<any>(`${this.apiUrl}/usuario/username/${username}`).pipe(
       map(response => response.userID),
       catchError(error => {

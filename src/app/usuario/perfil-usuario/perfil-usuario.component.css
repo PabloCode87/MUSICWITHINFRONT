@@ -76,8 +76,12 @@ body {
   }
   
   .custom-tabs .nav-link.active {
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: rgb(9, 22, 29, 0.75);
+    border-color: rgb(40, 167, 69, 0.75);
     color: #ffffff;
+  }
+
+  .transparent-bg{
+    background-color: rgb(28, 87, 105, 0.75);
   }
   

@@ -1,4 +1,4 @@
-<div class="container mt-5 bg-dark p-5 rounded">
+<div class="container mt-5 transparent-bg p-5 rounded">
     <h2 class="text-white">Buscar Usuarios</h2>
     <div class="row align-items-center">
         <div class="col-md-6">
@@ -16,13 +16,13 @@
             <div class="col-md-4" *ngFor="let usuario of usuarios">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h1 class="card-title text-white">{{ usuario.username }}</h1>
-                        <p class="card-text"><strong class="text-white">Nombre:</strong> {{ usuario.nombre }}</p>
-                        <p class="card-text"><strong class="text-white">Apellidos:</strong> {{ usuario.apellidos }}</p>
+                        <h1 class="card-title ">{{ usuario.username }}</h1>
+                        <p class="card-text"><strong >Nombre:</strong> {{ usuario.nombre }}</p>
+                        <p class="card-text"><strong>Apellidos:</strong> {{ usuario.apellidos }}</p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-success" (click)="seguirUsuario(usuario.userID)">Seguir</button>
-                        <button class="btn btn-danger" (click)="dejarDeSeguirUsuario(usuario.userID)">Dejar de seguir</button>
+                        <button class="btn btn-success" (click)="seguirUsuario(usuario.userID)">Follow <i class="bi bi-person-add"></i></button>
+                        <button class="btn btn-danger" (click)="dejarDeSeguirUsuario(usuario.userID)">Unfollow <i class="bi bi-person-dash"></i></button>
                     </div>
                 </div>
             </div>

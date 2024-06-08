@@ -23,6 +23,22 @@ export class PerfilUsuarioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const username = this.authService.getUsername();
+    console.log('username: '+username);
+    this.authService.getUserId(username).subscribe(
+      (userID) => {
+        if (userID !== null) {
+          this.currentUserID = userID;
+          console.log('currentID: '+this.currentUserID);
+        } else {
+          this.toastr.error('No se pudo obtener el ID del usuario');
+        }
+      },
+      (error) => {
+        this.toastr.error('Error al obtener el ID del usuario');
+        console.error('Error al obtener el ID del usuario:', error);
+      }
+    );
     this.user = JSON.parse(sessionStorage.getItem('user') || '{}');
     this.userForm = this.formBuilder.group({
       username: [this.user.username || '', [Validators.required, Validators.minLength(3)]],

@@ -1,4 +1,4 @@
-<div class="container mt-5 bg-dark p-5 rounded">
+<div class="container mt-5 p-5 rounded transparent-bg">
     <h2 class="text-white">Buscar Canciones</h2>
     <div class="row">
       <div class="col-md-4">
@@ -26,13 +26,13 @@
         <div class="col-md-3" *ngFor="let cancion of canciones">
           <div class="card mb-3">
             <div class="card-body">
-              <h1 class="card-title text-white">{{ cancion.song_name }}</h1>
-              <p class="card-text"><strong class="text-white">Artista:</strong> {{ cancion.artist }}</p>
-              <p class="card-text"><strong class="text-white">Género:</strong> {{ cancion.genre }}</p>
-              <p class="card-text"><strong class="text-white">Duración:</strong> {{ cancion.duration }}</p>
+              <h1 class="card-title">{{ cancion.song_name }}</h1>
+              <p class="card-text"><strong>Artista:</strong> {{ cancion.artist }}</p>
+              <p class="card-text"><strong >Género:</strong> {{ cancion.genre }}</p>
+              <p class="card-text"><strong >Duración:</strong> {{ cancion.duration }}</p>
             </div>
             <div class="card-footer">
-              <button class="btn btn-primary" (click)="verDetalleCancion(cancion.songID)">Ver Detalle</button>
+              <button class="btn btn-primary" (click)="verDetalleCancion(cancion.songID)">Ver Detalle <i class="bi bi-arrow-return-left"></i></button>
             </div>
           </div>
         </div>

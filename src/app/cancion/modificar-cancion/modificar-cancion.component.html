@@ -1,32 +1,45 @@
 <div *ngIf="cancion" class="container tp-4 mt-5">
-    <div class="card bg-light">
-        <div class="card-header bg-warning text-white">
-            <h2>Modificar {{ cancion.song_name }}</h2>
-        </div>
-        <div class="card-body">
-            <form (ngSubmit)="onSubmit(modificarForm)" #modificarForm="ngForm">
-                <div class="form-group">
-                    <label for="song_name" class="text-white">Nombre de la Canción:</label>
-                    <input type="text" id="song_name" class="form-control" required [(ngModel)]="cancion.song_name" name="song_name">
-                    <div *ngIf="!cancion.song_name" class="text-danger">El nombre de la canción es obligatorio.</div>
-                </div>
-                <div class="form-group">
-                    <label for="artist" class="text-white">Artista:</label>
-                    <input type="text" id="artist" class="form-control" required [(ngModel)]="cancion.artist" name="artist">
-                    <div *ngIf="!cancion.artist" class="text-danger">El nombre del artista es obligatorio.</div>
-                </div>
-                <div class="form-group">
-                    <label for="genre" class="text-white">Género:</label>
-                    <input type="text" id="genre" class="form-control" required [(ngModel)]="cancion.genre" name="genre">
-                    <div *ngIf="!cancion.genre" class="text-danger">El género es obligatorio.</div>
-                </div>
-                <div class="form-group">
-                    <label for="duration" class="text-white">Duración:</label>
-                    <input type="time" id="duration" class="form-control" required [(ngModel)]="cancion.duration" name="duration">
-                    <div *ngIf="!cancion.duration" class="text-danger">La duración es obligatoria.</div>
-                </div>
-                <button type="submit" class="btn btn-warning text-white mt-3">Guardar Cambios</button>
-            </form>
-        </div>
+    <div class="card transparent-bg">
+      <div class="card-header text-white">
+        <h2>Modificar {{ cancion.song_name }}</h2>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit(modificarForm)" #modificarForm="ngForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="song_name" class="text-white">Nombre de la Canción:</label>
+                <input type="text" id="song_name" class="form-control" required [(ngModel)]="cancion.song_name" name="song_name">
+                <div *ngIf="!cancion.song_name" class="text-danger">El nombre de la canción es obligatorio.</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="artist" class="text-white">Artista:</label>
+                <input type="text" id="artist" class="form-control" required [(ngModel)]="cancion.artist" name="artist">
+                <div *ngIf="!cancion.artist" class="text-danger">El nombre del artista es obligatorio.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="genre" class="text-white">Género:</label>
+                <input type="text" id="genre" class="form-control" required [(ngModel)]="cancion.genre" name="genre">
+                <div *ngIf="!cancion.genre" class="text-danger">El género es obligatorio.</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="duration" class="text-white">Duración:</label>
+                <input type="time" id="duration" class="form-control" required [(ngModel)]="cancion.duration" name="duration">
+                <div *ngIf="!cancion.duration" class="text-danger">La duración es obligatoria.</div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-outline-info mt-3">Guardar Cambios <i class="bi bi-floppy2-fill"></i></button>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
+  

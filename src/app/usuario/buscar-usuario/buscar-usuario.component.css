@@ -1,6 +1,9 @@
-.btn-success, .btn-danger{
+.btn-danger{
     margin-left: 5px;
 }
 .card-footer{
     background-color: #3030c4;
+}
+.transparent-bg {
+    background-color: rgba(0, 0, 0, 0.75);
 }
