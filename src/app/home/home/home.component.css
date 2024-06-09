@@ -3,15 +3,36 @@
 }
 
 .avatar {
-    width: 75px !important;
-    height: 75px !important;
+    width: 125px !important;
+    height: 125px !important;
 }
 
 .card {
-    border-radius: 10px;
+    min-height: 180px;
+    color: white;
+    border: none;
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.card-body{
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    font-family: 'Rock Salt', cursive;
 }
 
 .carousel-control-prev,
 .carousel-control-next {
     top: 105%;
 }
+
+.transparent-bg {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
+.small-card {
+    max-width: 250px;
+    margin-bottom: 20px;
+}
+

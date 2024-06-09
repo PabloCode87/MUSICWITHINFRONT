@@ -1,4 +1,5 @@
-<div class="container mt-4">
+<div class="container mt-4 ">
+  <h2 class="text-center text-white">Listas de Reproducciones</h2>
   <div class="row">
     <ng-container *ngIf="playlists && playlists.length > 0; else noPlaylists">
       <div class="col-12">
@@ -24,9 +25,9 @@
               <tr *ngIf="selectedPlaylist === playlist">
                 <td colspan="5">
                   <div class="d-flex justify-content-around">
-                    <button class="btn btn-success" (click)="playPlaylist(playlist)">Play</button>
-                    <button class="btn btn-primary" (click)="modifyPlaylist(playlist)">Modificar</button>
-                    <button class="btn btn-danger" (click)="deletePlaylist(playlist)">Eliminar</button>
+                    <button class="btn btn-primary" (click)="playPlaylist(playlist)">Play <i class="bi bi-arrow-return-left"></i></button>
+                    <button class="btn btn-warning" (click)="modifyPlaylist(playlist)"><i class="bi bi-pencil-square"> Modificar</i></button>
+                    <button class="btn btn-danger" (click)="deletePlaylist(playlist)"><i class="bi bi-trash"> Eliminar</i></button>
                   </div>
                 </td>
               </tr>

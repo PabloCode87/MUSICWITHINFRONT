@@ -2,7 +2,7 @@
     <div class="row mb-5">
         <!-- Sección de usuario -->
         <div class="col-md-6 mb-4 mb-md-0">
-            <div class="card">
+            <div class="card transparent-bg">
                 <div class="card-body d-flex align-items-center">
                     <img *ngIf="currentUser && currentUser.foto" [src]="'data:image/png;base64,' + currentUser.foto" alt="Foto de perfil" class="profile-picture img-fluid rounded-circle me-3 avatar">
                     <img *ngIf="!currentUser || !currentUser.foto" src="assets/images/usuario/profile.png" alt="Foto de perfil predeterminada" class="profile-picture img-fluid rounded-circle me-3 avatar">
@@ -16,7 +16,7 @@
 
         <!-- Sección de llamada a la acción -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card transparent-bg">
                 <div class="card-body">
                     <h3 class="card-title text-center">¿Que te apetece hacer?</h3>
                     <div class="row justify-content-center">
@@ -54,7 +54,7 @@
                         <div id="songsCarousel" class="carousel slide" data-bs-ride="carousel" data-interval="false">
                             <div class="carousel-inner">
                                 <div class="carousel-item" *ngFor="let cancion of canciones; let i = index" [class.active]="i === 0">
-                                    <div class="card mb-3">
+                                    <div class="card mb-3 transparent-bg">
                                         <div class="card-body">
                                             <h4 class="card-title">Nombre: <i>{{ cancion.song_name }}</i></h4>
                                             <hr class="text-white">
@@ -89,7 +89,7 @@
                     <div id="playlistsCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item" *ngFor="let playlist of playlists; let i = index" [class.active]="i === 0">
-                                <div class="card mb-3">
+                                <div class="card mb-3 transparent-bg">
                                     <div class="card-body">
                                         <h4 class="card-title">{{ playlist.playlist_name }}</h4>
                                         <hr class="text-white">

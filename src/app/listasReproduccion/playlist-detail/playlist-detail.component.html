@@ -26,10 +26,7 @@
                     <td>{{ song.artist }}</td>
                     <td>{{ song.duration }}</td>
                     <td>
-                        <button *ngIf="isPlaying && currentAudioUrl === song.safeAudioUrl" class="btn btn-warning" (click)="pause()">
-                            <i class="bi bi-stop-circle"> Stop</i>
-                        </button>
-                        <button *ngIf="!isPlaying || currentAudioUrl !== song.safeAudioUrl" class="btn btn-success" (click)="play(song)">
+                        <button *ngIf="isPlaying || currentAudioUrl !== song.safeAudioUrl" class="btn btn-success" (click)="play(song)">
                             <i class="bi bi-play-circle"> Play</i>
                         </button>
                         <button *ngIf="playlistUserID === currentUserID" class="btn btn-danger" (click)="confirmDelete(song)">
