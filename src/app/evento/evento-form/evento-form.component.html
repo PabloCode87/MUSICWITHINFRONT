@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h2>Crear Evento</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()" class="row gx-3 gy-2 align-items-center">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <label for="nombre_evento" class="form-label">Nombre del Evento</label>
+          <input type="text" class="form-control" id="nombre_evento" formControlName="nombre_evento" placeholder="Nombre del Evento" required>
+          <div *ngIf="eventoForm.get('nombre_evento')?.invalid && eventoForm.get('nombre_evento')?.touched" class="text-danger">
+            <small *ngIf="eventoForm.get('nombre_evento')?.errors?.['required']">Nombre del evento es requerido.</small>
+            <small *ngIf="eventoForm.get('nombre_evento')?.errors?.['minlength']">Nombre del evento debe tener al menos 3 caracteres.</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="fecha_creacion" class="form-label">Fecha de Creación</label>
+          <input type="date" class="form-control" id="fecha_creacion" formControlName="fecha_creacion" required>
+          <div *ngIf="eventoForm.get('fecha_creacion')?.invalid && eventoForm.get('fecha_creacion')?.touched" class="text-danger">
+            <small *ngIf="eventoForm.get('fecha_creacion')?.errors?.['required']">Fecha de creación es requerida.</small>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3 mb-md-0">
+          <label for="lugar_evento" class="form-label">Lugar del Evento</label>
+          <input type="text" class="form-control" id="lugar_evento" formControlName="lugar_evento" placeholder="Lugar del Evento" required>
+          <div *ngIf="eventoForm.get('lugar_evento')?.invalid && eventoForm.get('lugar_evento')?.touched" class="text-danger">
+            <small *ngIf="eventoForm.get('lugar_evento')?.errors?.['required']">Lugar del evento es requerido.</small>
+            <small *ngIf="eventoForm.get('lugar_evento')?.errors?.['minlength']">Lugar del evento debe tener al menos 3 caracteres.</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="userID" class="form-label">ID del Usuario</label>
+          <input type="number" class="form-control" id="userID" formControlName="userID" placeholder="ID del Usuario" required>
+        </div>
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-success" [disabled]="eventoForm.invalid">Crear Evento <i class="bi bi-cloud-upload-fill"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

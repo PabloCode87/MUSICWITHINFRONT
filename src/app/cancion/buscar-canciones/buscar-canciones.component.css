@@ -1,0 +1,45 @@
+.transparent-bg {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.card {
+    min-height: 250px;
+    color: white;
+    border: none;
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+    border-radius: 20px;
+    background-image: url("/assets/images/fondo/WT-DEEP_BLUE_CLOSE_UP_3.jpg");
+}
+
+.card:hover{
+    min-height: 250px;
+    color: white;
+    border: none;
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.50);
+    background-image: url("/assets/images/fondo/WT-DEEP_BLUE_CLOSE_UP_3.jpg");
+}
+
+.card-body {
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    font-family: 'Rock Salt', cursive;
+}
+
+.card-footer {
+    background: none;
+    border-top: none;
+}
+
+.card-footer .media img {
+    border: solid 3px rgba(255, 255, 255, 0.3);
+}
+
+.card-footer button {
+    border: none;
+    color: white;
+    font-family: 'Rock Salt', cursive;
+    transition: background-color 0.3s;
+}

@@ -1,0 +1,117 @@
+<div class="container mt-5">
+    <div class="row mb-5">
+        <!-- Sección de usuario -->
+        <div class="col-md-6 mb-4 mb-md-0">
+            <div class="card transparent-bg">
+                <div class="card-body d-flex align-items-center">
+                    <img *ngIf="currentUser && currentUser.foto" [src]="'data:image/png;base64,' + currentUser.foto" alt="Foto de perfil" class="profile-picture img-fluid rounded-circle me-3 avatar">
+                    <img *ngIf="!currentUser || !currentUser.foto" src="assets/images/usuario/profile.png" alt="Foto de perfil predeterminada" class="profile-picture img-fluid rounded-circle me-3 avatar">
+                    <h2 class="card-title">Bienvenido <i>{{ currentUser?.username }}</i>!</h2>
+                </div>
+                <div class="card-footer">
+                    <button routerLink="/perfil-usuario" class="btn btn-primary btn-block">Mi Perfil <i class="bi bi-arrow-return-left"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de llamada a la acción -->
+        <div class="col-md-6">
+            <div class="card transparent-bg">
+                <div class="card-body">
+                    <h3 class="card-title text-center">¿Que te apetece hacer?</h3>
+                    <div class="row justify-content-center">
+                        <div class="col-md-2 mb-2"></div>
+                        <div class="col-md-5 mb-2">
+                            <button routerLink="/subir-cancion" class="btn btn-primary btn-block">Subir Cancion <i class="bi bi-arrow-return-left"></i></button>
+                        </div>
+                        <div class="col-md-5 mb-2">
+                            <button routerLink="/crear-playlists" class="btn btn-primary btn-block">Crear Playlist <i class="bi bi-arrow-return-left"></i></button>
+                        </div>
+                        <div class="col-md-2 mb-2"></div>
+                        <div class="col-md-5 mb-2">
+                            <button routerLink="/buscar-usuarios" class="btn btn-primary btn-block">Buscar Usuarios <i class="bi bi-search"></i></button>
+                        </div>
+                        <div class="col-md-5 mb-2">
+                            <button (click)="logout()" class="btn btn-warning btn-block"><i class="bi bi-box-arrow-right"> Logout</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <!-- Sección de canciones y playlists -->
+        <div class="col-md-6">
+            <!-- Sección de canciones -->
+            <div class="songs-section mb-5">
+                <h2 class="text-white text-center">Tus Canciones</h2>
+                <div class="col">
+                    <div *ngIf="canciones.length === 0; else songsList">
+                        <p class="text-white text-center">No tienes canciones.</p>
+                    </div>
+                    <ng-template #songsList>
+                        <div id="songsCarousel" class="carousel slide" data-bs-ride="carousel" data-interval="false">
+                            <div class="carousel-inner">
+                                <div class="carousel-item" *ngFor="let cancion of canciones; let i = index" [class.active]="i === 0">
+                                    <div class="card mb-3 transparent-bg">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Nombre: <i>{{ cancion.song_name }}</i></h4>
+                                            <hr class="text-white">
+                                            <p class="card-text">Artitas: <i>{{ cancion.artist }}</i></p>
+                                            <hr class="text-white">
+                                            <p class="card-text">Genero: <i>{{ cancion.genre }}</i></p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-primary" (click)="irACancion(cancion.songID)">Ir a <i class="bi bi-arrow-return-left"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#songsCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span>Atras</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#songsCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span>Siguiente</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+            <!-- Sección de playlists -->
+        <div class="col-md-6">
+            <div class="playlists-section mb-5">
+                <h2 class="text-white text-center">Tus Playlists</h2>
+                <div>
+                    <div id="playlistsCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" *ngFor="let playlist of playlists; let i = index" [class.active]="i === 0">
+                                <div class="card mb-3 transparent-bg">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ playlist.playlist_name }}</h4>
+                                        <hr class="text-white">
+                                        <p class="card-text">{{ playlist.description }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button class="btn btn-primary" (click)="irAPlaylist(playlist.playlistID)">Ir a <i class="bi bi-arrow-return-left"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#playlistsCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span>Atras</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#playlistsCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span>Siguiente</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>

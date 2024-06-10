@@ -1,0 +1,138 @@
+body {
+  background-color: #191970;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.card {
+    width: 100%;
+    color: white;
+  }
+
+.card-header h2{
+    margin-left: 20px;
+}
+
+.profile-picture-container {
+    position: relative;
+    cursor: pointer;
+    width: 80%;
+    height: 80%;
+    margin-left: 10px;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .profile-picture-container:hover .overlay {
+    opacity: 1;
+  }
+  
+  .add-photo-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .add-photo-link:hover {
+    text-decoration: underline;
+  }
+  .btn-delete {
+    color: #fff;
+    font-weight: bold;
+    background-color: #dc3545;
+    border-color: white;
+    padding: 25px 10px;
+    height: auto;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .btn-delete:hover {
+    transform: scale(1.1);
+    color: #fff;
+    font-weight: bolder;
+    background-color: #dc3545;
+    border-color: white;
+  }
+  .custom-tabs .nav-link {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    color: #495057;
+  }
+  
+  .custom-tabs .nav-link.active {
+    background-color: rgb(9, 22, 29, 0.75);
+    border-color: rgb(40, 167, 69, 0.75);
+    color: #ffffff;
+  }
+
+  .transparent-bg{
+    background-color: rgb(28, 87, 105, 0.75);
+  }
+
+  /*Tabla*/
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.table thead th {
+    background: linear-gradient(45deg, rgba(52, 58, 64, 0.8), rgba(90, 90, 90, 0.8));
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table thead th:hover {
+    background-color: rgba(74, 74, 74, 0.8);
+    cursor: pointer;
+}
+
+.table tbody {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+}
+
+.table tbody td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #333;
+    vertical-align: middle;
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr {
+    border-radius: 10px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(30, 215, 96, 0.75);
+    box-shadow: 0 4px 8px rgba(30, 215, 96, 0.75);
+}
+
+.table-bordered {
+    border: 2px solid #343a40;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #343a40;
+}
+  

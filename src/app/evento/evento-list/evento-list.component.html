@@ -1,0 +1,43 @@
+<div class="container mt-5">
+    <h2 class="text-center text-white">Lista de Eventos</h2>
+    <div class="table-responsive">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Lugar</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evento of eventos">
+            <td>{{ evento.nombre_evento }}</td>
+            <td>{{ evento.fecha_creacion | date }}</td>
+            <td>{{ evento.lugar_evento }}</td>
+            <td>
+              <button class="btn btn-outline-warning me-2" *ngIf="userId === evento.userID || isAdmin" [routerLink]="['/modificar-evento', evento.eventoID]">
+                <i class="bi bi-pencil-square"> Modificar</i>
+              </button>
+              <button class="btn btn-outline-danger me-2" *ngIf="userId === evento.userID || isAdmin" (click)="eliminarEvento(evento.eventoID)">
+                <i class="bi bi-trash"> Eliminar</i>
+              </button>
+              <button class="btn btn-outline-success me-2" (click)="unirseEvento(evento.eventoID)">
+                Ir <i class="bi bi-person-plus"></i> <!-- No funciona el insertar en front -->
+              </button>
+              <button class="btn btn-outline-danger me-2" (click)="salirseEvento(evento.eventoID)">
+                No ir <i class="bi bi-person-x"></i>
+              </button>
+              <button class="btn btn-outline-info me-2" (click)="detallesEvento(evento.eventoID)">
+                Detalles <i class="bi bi-arrow-return-left"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-3">
+      <button class="btn btn-primary" routerLink="/crear-evento">Crear Evento</button>
+    </div>
+  </div>
+  

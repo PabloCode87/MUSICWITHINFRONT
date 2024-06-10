@@ -1,0 +1,21 @@
+<div *ngIf="albums" class="container mt-5">
+    <h2 class="text-white">{{title}}</h2>
+    <div class="table-responsive">
+        <table class="table table-info table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre Album</th>
+                    <th>Artista/Compositor</th>
+                    <th>Fecha Lanzamiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let album of albums">
+                    <td>{{album.album_name}}</td>
+                    <td>{{album.artist}}</td>
+                    <td>{{album.year}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

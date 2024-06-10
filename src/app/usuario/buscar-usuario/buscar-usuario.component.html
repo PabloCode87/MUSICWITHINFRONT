@@ -1,0 +1,35 @@
+<div class="container mt-5 transparent-bg p-5 rounded">
+    <h2 class="text-white">Buscar Usuarios</h2>
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <label for="keyword" class="form-label text-white">Keyword:</label>
+            <input type="text" id="keyword" class="form-control" [(ngModel)]="keyword" placeholder="Username, Nombre o Apellido...">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary mt-4" (click)="buscarUsuarios()">Buscar <i class="bi bi-search"></i></button>
+        </div>
+    </div>
+
+    <div *ngIf="usuarios.length > 0; else noResults" class="mt-3">
+        <h3 class="text-white">Resultados de la Búsqueda:</h3>
+        <div class="row mt-3">
+            <div class="col-md-4" *ngFor="let usuario of usuarios">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ usuario.username }}</h1>
+                        <p class="card-text"><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+                        <p class="card-text"><strong>Apellidos:</strong> {{ usuario.apellidos }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success" (click)="seguirUsuario(usuario.userID)">Follow <i class="bi bi-person-add"></i></button>
+                        <button class="btn btn-danger" (click)="dejarDeSeguirUsuario(usuario.userID)">Unfollow <i class="bi bi-person-dash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noResults>
+        <h3 class="text-white mt-3">No se encontraron resultados</h3>
+    </ng-template>
+</div>

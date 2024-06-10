@@ -1,0 +1,79 @@
+.mini-reproductor {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: #f5f5f5;
+    padding: 10px;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+  }
+
+  .audio-player audio {
+    border-radius: 10px;
+    outline: none;
+  }
+  
+  .audio-player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .mini-reproductor-audio {
+    width: 100%;
+  }
+
+.btn-warning, .btn-danger, .btn-primary, .btn-info{
+  margin-left: 20px;
+}
+
+.card.cancion {
+  min-height: 250px;
+  color: white;
+  border: none;
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.card.cancion:hover {
+  min-height: 250px;
+  color: white;
+  border: none;
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.50);
+}
+
+.transparent-bg {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+/* Comentarios */
+.card.comentario {
+  min-height: 150px;
+  max-width: 600px;
+  color: white;
+  border: none;
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.card.comentario:hover {
+  min-height: 150px;
+  max-width: 600px;
+  color: black;
+  border: none;
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 -5px 20px 0 rgba(0, 0, 0, 0.80);
+  background-color: rgba(255, 255, 255, 0.80);
+}

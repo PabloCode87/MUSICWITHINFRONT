@@ -1,0 +1,16 @@
+.search-container {
+    position: relative;
+  }
+  
+  .search-container .form-control {
+    padding-left: 2.5rem; /* Deja espacio para el icono */
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 10px; /* Ajusta según sea necesario */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Asegúrate de que el ícono no interfiera con la entrada */
+  }
+  

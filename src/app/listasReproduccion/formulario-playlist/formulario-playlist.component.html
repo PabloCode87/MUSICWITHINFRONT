@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h2>Crear Playlist</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()" class="row gx-3 gy-2 align-items-center">
+        <div class="col-sm-6">
+          <label for="playlist_name">Nombre del Playlist</label>
+          <input type="text" id="playlist_name" formControlName="playlist_name" class="form-control" placeholder="Nombre del Playlist">
+          <div *ngIf="getFormControlError('playlist_name', 'required')" class="text-danger large">
+            El nombre de la playlist es obligatorio.
+          </div>
+          <div *ngIf="getFormControlError('playlist_name', 'minlength')" class="text-danger large">
+            El nombre de la playlist debe tener al menos 3 caracteres.
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label for="status">Estado</label>
+          <select id="status" formControlName="status" class="form-select">
+            <option value="PUBLICA">Pública</option>
+            <option value="PRIVADA">Privada</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label for="description">Descripción</label>
+          <textarea id="description" formControlName="description" class="form-control" rows="3" placeholder="Descripción"></textarea>
+          <div *ngIf="getFormControlError('description', 'required')" class="text-danger large">
+            La descripción es obligatoria.
+          </div>
+          <div *ngIf="getFormControlError('description', 'minlength')" class="text-danger large">
+            La descripción debe tener al menos 3 caracteres.
+          </div>
+        </div>
+        <div class="col-sm-6"></div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-success mt-3">Crear Playlist</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
