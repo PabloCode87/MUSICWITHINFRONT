@@ -16,6 +16,7 @@ export class BusquedaPlaylistComponent implements OnInit {
   playlists: Playlist[] = [];
   searchName: string = '';
   searchStatus: string = '';
+  loading: boolean = false;
 
   constructor(
     private playlistService: PlaylistService,
@@ -29,13 +30,17 @@ export class BusquedaPlaylistComponent implements OnInit {
   }
 
   buscarPlaylists(): void {
+    this.loading = true;
+
     this.playlistService.buscarPlaylists(this.searchName, this.searchStatus)
       .subscribe(
         (data: Playlist[]) => {
           this.playlists = data;
+          this.loading = false;
         },
         (error) => {
           console.error('Error trayendo playlists', error);
+          this.loading = false;
         }
       );
   }

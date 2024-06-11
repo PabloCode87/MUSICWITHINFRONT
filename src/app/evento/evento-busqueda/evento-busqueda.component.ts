@@ -14,6 +14,7 @@ export class EventoBusquedaComponent implements OnInit {
   nombreEvento: string = '';
   fechaCreacion: Date | null = null;
   lugarEvento: string = '';
+  loading: boolean = false;
 
   constructor(private eventoService: EventoService, private toastr: ToastrService) { }
 
@@ -21,13 +22,17 @@ export class EventoBusquedaComponent implements OnInit {
   }
 
   buscarEventos() {
+    this.loading = true;
+
     const fechaCreacionToSend = this.fechaCreacion ? this.fechaCreacion : undefined;
     this.eventoService.buscarEventos(this.nombreEvento, fechaCreacionToSend, this.lugarEvento)
       .subscribe(eventos => {
         if (eventos.length === 0) {
           this.mostrarToastSinResultados();
+          this.loading = false;
         }
         this.eventos = eventos;
+        this.loading = false;
       });
   }
 

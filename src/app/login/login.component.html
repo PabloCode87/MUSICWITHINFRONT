@@ -21,8 +21,12 @@
 
       <button type="submit" class="btn bg-spotify-orange btn-login" [disabled]="userForm.invalid">Entrar</button>
     </form>
+
     <button class="btn btn-secondary my-3" (click)="navigateToCreateUser()">Registrarse</button>
     <br>
+    <div *ngIf="loading" class="spinner-border" role="status">
+      <span class="sr-only"></span>
+    </div>
     <br>
     <a href="javascript:void(0)" (click)="onRecoverPassword()" class="recuperarPassword">Recuperar Contraseña</a>
   </div>

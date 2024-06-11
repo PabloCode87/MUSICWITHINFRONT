@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   userForm!: FormGroup;
   backgroundImage: string = '../../../assets/images/login/background-login1.jpg';
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,11 +83,14 @@ export class LoginComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loading = true;
         this.loginService.recoverPassword(result.value.username, result.value.email).subscribe(
           (response) => {
+            this.loading = false;
             Swal.fire('Recuperación Exitosa', `Password enviado al email: ${result.value.email}`, 'success');
           },
           (error) => {
+            this.loading = false;
             Swal.fire('Error', 'No se pudo recuperar la contraseña. Verifique los datos ingresados', 'error');
           }
         );

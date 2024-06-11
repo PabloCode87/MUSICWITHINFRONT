@@ -13,6 +13,7 @@ export class BuscarUsuarioComponent implements OnInit {
   usuarios: any[] = [];
   keyword: string = '';
   currentUserID?: number;
+  loading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -38,13 +39,17 @@ export class BuscarUsuarioComponent implements OnInit {
   }
 
   buscarUsuarios() {
+    this.loading = true;
+
     this.authService.buscarUsuarios(this.keyword).subscribe(
       (usuarios) => {
         this.usuarios = usuarios;
+        this.loading = false;
       },
       (error) => {
         this.toastr.error('Error al buscar usuarios');
         console.error('Error al buscar usuarios:', error);
+        this.loading = false;
       }
     );
   }

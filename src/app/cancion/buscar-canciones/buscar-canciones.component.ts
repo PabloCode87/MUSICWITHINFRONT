@@ -15,6 +15,7 @@ export class BuscarCancionesComponent implements OnInit {
   canciones: Cancion[] = [];
   generos: string[] = [];
   showNoResults: boolean = false;
+  loading: boolean = false;
 
   constructor(private cancionService: CancionService, private router: Router) { }
   ngOnInit(): void {
@@ -33,24 +34,28 @@ export class BuscarCancionesComponent implements OnInit {
   }
 
   buscarCanciones(): void {
+    this.loading = true;
+    this.showNoResults = false;
+
     this.cancionService.buscarCancionesPorFiltros(this.songName, this.artist, this.genre)
       .subscribe(
         (data: Cancion[]) => {
           this.canciones = data;
+          this.loading = false;
           if (this.canciones.length === 0) {
             setTimeout(() => {
               this.showNoResults = true;
-            }, 8000); // 8 segundos
+            }, 8000);
           }
         },
         (error) => {
           console.error('Error al buscar canciones:', error);
+          this.loading = false;
         }
       );
   }
 
   verDetalleCancion(cancionId: number): void {
-    // Navegar a la URL de detalle de la canción
     this.router.navigate(['/cancion', cancionId]);
   }
 }
