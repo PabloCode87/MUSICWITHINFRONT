@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PlaylistService {
-  private apiUrl = 'http://localhost:8080/playlist';
+  private apiUrl = 'http://localhost:8085/playlist';
 
   constructor(private http: HttpClient) { }
 
@@ -46,7 +46,7 @@ export class PlaylistService {
   }
 
   removeFromPlaylist(playlistID: number, cancionID: number): Observable<any> {
-    const url = `http://localhost:8080/playlistsong/${playlistID}/${cancionID}`;
+    const url = `http://localhost:8085/playlistsong/${playlistID}/${cancionID}`;
     return this.http.delete<any>(url).pipe(
       catchError(error => {
         return throwError(error);

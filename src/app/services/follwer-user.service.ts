@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FollowerUserService {
 
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'http://localhost:8085';
 
   constructor(private http: HttpClient) { }
 

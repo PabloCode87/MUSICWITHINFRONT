@@ -9,7 +9,7 @@ import { Comentario } from '../interfaces/comentario';
 export class ComentarioService {
 
   
-  private baseUrl = 'http://localhost:8080/comentario';
+  private baseUrl = 'http://localhost:8085/comentario';
 
   constructor(private http: HttpClient) { }
 

@@ -9,7 +9,7 @@ import { Cancion } from '../interfaces/cancion';
 })
 export class CancionService {
 
-  private apiUrl = 'http://localhost:8080/cancion';
+  private apiUrl = 'http://localhost:8085/cancion';
 
   constructor(private http: HttpClient, private router:Router) { }
 
@@ -67,7 +67,7 @@ export class CancionService {
   }
 
   eliminarCancionPlaylist(cancionID: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/cancionPlaylist/${cancionID}`).pipe(
+    return this.http.delete<void>(`http://localhost:8085/cancionPlaylist/${cancionID}`).pipe(
       catchError(this.handleError)
     );
   }

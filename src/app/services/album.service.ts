@@ -8,7 +8,7 @@ import { Cancion } from '../interfaces/cancion';
   providedIn: 'root'
 })
 export class AlbumService {
-  private apiUrl = 'http://localhost:8080/album'; 
+  private apiUrl = 'http://localhost:8085/album'; 
 
   constructor(private http: HttpClient) { }
 

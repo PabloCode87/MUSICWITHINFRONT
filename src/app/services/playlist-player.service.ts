@@ -13,7 +13,7 @@ export class PlaylistPlayerService {
   private isPlayingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isPlaying$: Observable<boolean> = this.isPlayingSubject.asObservable();
 
-  private apiUrl = 'http://localhost:8080/playlistsong';
+  private apiUrl = 'http://localhost:8085/playlistsong';
 
   constructor(private http: HttpClient) { }
 
