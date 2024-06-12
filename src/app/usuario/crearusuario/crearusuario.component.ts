@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-crearusuario',
@@ -14,25 +15,23 @@ export class CrearusuarioComponent implements OnInit {
   roleId: number = 2;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private toastr: ToastrService,
     private authService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.crearUsuarioForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email, this.emailValidator]],
+    this.crearUsuarioForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       confirmEmail: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
-      confirmPassword: ['', [Validators.required]],
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      apellidos: ['', [Validators.required, Validators.minLength(3)]],
-      foto: [null]
-    }, { validator: this.passwordMatchValidator.bind(this) });
-
-    this.crearUsuarioForm.get('confirmEmail')?.setValidators([Validators.required, this.emailMatchValidator.bind(this)]);
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      nombre: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      foto: ['']
+    }, { validator: this.checkEmailsAndPasswords });
   }
 
   onSubmit(): void {
@@ -40,21 +39,23 @@ export class CrearusuarioComponent implements OnInit {
       this.toastr.error('Por favor, completa todos los campos del formulario correctamente.', 'Error');
       return;
     }
-
-    const formData = new FormData();
-    formData.append('username', this.crearUsuarioForm.get('username')?.value);
-    formData.append('email', this.crearUsuarioForm.get('email')?.value);
-    formData.append('password_hash', this.crearUsuarioForm.get('password')?.value);
-    formData.append('nombre', this.crearUsuarioForm.get('nombre')?.value);
-    formData.append('apellidos', this.crearUsuarioForm.get('apellidos')?.value);
-    formData.append('roleID', this.roleId.toString());
-    formData.append('fecha_creacion', new Date().toISOString());
-
+  
+    const formData = {
+      username: this.crearUsuarioForm.get('username')?.value,
+      email: this.crearUsuarioForm.get('email')?.value,
+      password_hash: this.crearUsuarioForm.get('password')?.value,
+      nombre: this.crearUsuarioForm.get('nombre')?.value,
+      apellidos: this.crearUsuarioForm.get('apellidos')?.value,
+      roleID: this.roleId,
+      fecha_creacion: formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss', 'en-US'),
+      foto: ''
+    };
+  
     const fotoControl = this.crearUsuarioForm.get('foto');
     if (fotoControl && fotoControl.value) {
       const file = (fotoControl.value as FileList)[0];
       this.convertFileToBase64(file).then((base64: string) => {
-        formData.append('foto', base64);
+        formData.foto = base64;
         this.submitForm(formData);
       });
     } else {
@@ -62,18 +63,47 @@ export class CrearusuarioComponent implements OnInit {
     }
   }
 
-  submitForm(formData: FormData): void {
-    this.authService.crearUsuario(formData).subscribe(
-      () => {
-        this.toastr.success('Usuario creado correctamente.', 'Éxito');
-        this.router.navigate(['/login']);
-      },
-      error => {
-        console.error('Error al crear el usuario:', error);
-        this.toastr.error('Se produjo un error al crear el usuario. Por favor, inténtalo de nuevo más tarde.', 'Error');
-      }
-    );
+  getFormControlError(controlName: string, errorName: string): boolean {
+    const control = this.crearUsuarioForm.get(controlName);
+    if (!control) {
+      return false;
+    }
+    return control.hasError(errorName) && (control.dirty || control.touched);
   }
+
+  checkEmailsAndPasswords(group: AbstractControl) {
+    const emailControl = group.get('email');
+    const confirmEmailControl = group.get('confirmEmail');
+    const passwordControl = group.get('password');
+    const confirmPasswordControl = group.get('confirmPassword');
+
+    if (!emailControl || !confirmEmailControl || !passwordControl || !confirmPasswordControl) {
+        return null; // If any control is missing, we don't perform validation.
+    }
+
+    const email = emailControl.value;
+    const confirmEmail = confirmEmailControl.value;
+    const password = passwordControl.value;
+    const confirmPassword = confirmPasswordControl.value;
+
+    return email === confirmEmail && password === confirmPassword ? null : {
+        emailMismatch: email !== confirmEmail,
+        passwordMismatch: password !== confirmPassword
+    };
+}
+
+submitForm(formData: any): void {
+  this.authService.crearUsuario(formData).subscribe(
+    () => {
+      this.toastr.success('Usuario creado correctamente.', 'Éxito');
+      this.router.navigate(['/login']);
+    },
+    error => {
+      console.error('Error al crear el usuario:', error);
+      this.toastr.error('Se produjo un error al crear el usuario. Por favor, inténtalo de nuevo más tarde.', 'Error');
+    }
+  );
+}
 
   emailValidator(control: AbstractControl): ValidationErrors | null {
     const email = control.value;
@@ -90,32 +120,21 @@ export class CrearusuarioComponent implements OnInit {
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.value;
     const passwordPattern = /^(?=.*[0-9]).{6,}$/;
-    return passwordPattern.test(password) ? null : { invalidPassword: true };
+    return null;
   }
 
-  passwordMatchValidator(formGroup: FormGroup) {
-    const passwordControl = formGroup.get('password');
-    const confirmPasswordControl = formGroup.get('confirmPassword');
-    if (passwordControl && confirmPasswordControl) {
-      if (passwordControl.value !== confirmPasswordControl.value) {
-        confirmPasswordControl.setErrors({ passwordMismatch: true });
-      } else {
-        confirmPasswordControl.setErrors(null);
-      }
-    }
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
   convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve((reader.result as string).split(',')[1]);
+      reader.onload = () => resolve(reader.result as string);
       reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
     });
-  }
-
-  getFormControlError(controlName: string, errorType: string): boolean {
-    const control = this.crearUsuarioForm.get(controlName);
-    return control ? control.hasError(errorType) && (control.dirty || control.touched) : false;
   }
 }

@@ -33,13 +33,12 @@ export class AuthService {
     );
   }
 
-  crearUsuario(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/usuario`, formData).pipe(
-      catchError(error => {
-        console.error('Error al crear el usuario:', error);
-        return of(null);
-      })
-    );
+  crearUsuario(usuario: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/usuario`, usuario, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   logout(){
